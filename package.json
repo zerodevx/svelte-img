@@ -3,13 +3,14 @@
   "description": "Lazy-load images progressively",
   "version": "0.1.0-rc1",
   "svelte": "src/index.js",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
+  "main": "dist/svelte-img.js",
   "scripts": {
+    "tailwind:build": "tailwind build -o docs/build/global.css",
     "dev": "rollup -c -w",
     "start": "sirv docs",
     "lint": "eslint .",
     "build:dev": "rollup -c",
+    "build:css": "NODE_ENV=production npm run tailwind:build",
     "build:dist": "rollup -c rollup.dist.config.js",
     "build": "run-s build:*",
     "prepublishOnly": "npm run build"
@@ -17,20 +18,21 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "eslint": "^7.9.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "eslint": "^7.10.0",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-svelte3": "^2.7.3",
     "npm-run-all": "^4.1.5",
-    "rollup": "^2.28.1",
+    "rollup": "^2.28.2",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^6.0.1",
     "rollup-plugin-terser": "^7.0.2",
     "sirv-cli": "^1.0.6",
-    "svelte": "^3.26.0",
+    "svelte": "^3.28.0",
     "tailwindcss": "^1.8.10"
   },
   "files": [
@@ -46,6 +48,8 @@
     "svelte",
     "webcomponent",
     "custom-element",
-    "image"
+    "image",
+    "lazy-load",
+    "progressive"
   ]
 }
