@@ -4,12 +4,12 @@ node_modules
 /.svelte-kit
 /package
 .env
-.env.\*
+.env.*
 !.env.example
 /temp
+LICENSE
 
 # Ignore files for PNPM, NPM and YARN
-
 pnpm-lock.yaml
 package-lock.json
 yarn.lock

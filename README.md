@@ -15,13 +15,15 @@ into this:
 ```html
 <div>
   <div style="background:url('/image-tiny.jpg') center center / cover no-repeat"></div>
-  <img src="/image.jpg" alt="image" loading="lazy">
+  <img src="/image.jpg" alt="image" loading="lazy" />
 </div>
 ```
 
-where the placeholder will be gaussian blurred and the main image beautifully transitioned in place when its download completes.
+where the placeholder will be gaussian blurred and the main image beautifully transitioned in place
+when its download completes.
 
-The work of lazy-loading is deferred to browsers to handle natively via the `loading="lazy"` attribute. For browsers that don't support this (yet), images will load as normal (i.e. eagerly).
+The work of lazy-loading is deferred to browsers to handle natively via the `loading="lazy"`
+attribute. For browsers that don't support this (yet), images will load as normal (i.e. eagerly).
 
 ## Usage
 
@@ -61,13 +63,13 @@ Simply consume anywhere in your app:
 </style>
 
 <div class="container">
-  <Img
+  <img
     srcset="/images/hello-800.jpg 800w, /images/hello-480.jpg 480w"
     sizes="(max-width: 600px) 480px, 800px"
     src="/images/hello-800.jpg"
     alt="hello"
     placeholder="/images/hello-20.jpg"
-    />
+  />
 </div>
 ```
 
@@ -90,7 +92,9 @@ Just load the web component definition from CDN then use anywhere.
 </body>
 ```
 
-Or you can [download](https://raw.githubusercontent.com/zerodevx/svelte-img/master/dist/svelte-img.js) the script and host it yourself.
+Or you can
+[download](https://raw.githubusercontent.com/zerodevx/svelte-img/master/dist/svelte-img.js) the
+script and host it yourself.
 
 ## Contributing
 
@@ -123,7 +127,6 @@ $ npm run lint
 ```
 
 Then raise a PR.
-
 
 ## License
 
