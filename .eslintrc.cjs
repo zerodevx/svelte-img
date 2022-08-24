@@ -11,5 +11,9 @@ module.exports = {
     browser: true,
     es2017: true,
     node: true
+  },
+  rules: {
+    'no-tabs': 'error',
+    'no-unexpected-multiline': 'error'
   }
 }

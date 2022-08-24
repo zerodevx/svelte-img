@@ -1,132 +1,69 @@
 # svelte-img
 
-A component to lazy-load images natively and progressively.
+> Elegant responsive images for SvelteKit.
 
-DEMO: https://zerodevx.github.io/svelte-img/
+Demo: https://zerodevx.github.io/svelte-img/
 
-This is a super simple and lightweight component that transforms this:
+## Install
 
-```html
-<svelte-img src="/image.jpg" placeholder="/image-tiny.jpg"></svelte-img>
+Install the package:
+
 ```
-
-into this:
-
-```html
-<div>
-  <div style="background:url('/image-tiny.jpg') center center / cover no-repeat"></div>
-  <img src="/image.jpg" alt="image" loading="lazy" />
-</div>
-```
-
-where the placeholder will be gaussian blurred and the main image beautifully transitioned in place
-when its download completes.
-
-The work of lazy-loading is deferred to browsers to handle natively via the `loading="lazy"`
-attribute. For browsers that don't support this (yet), images will load as normal (i.e. eagerly).
-
-## Usage
-
-### Install
-
-To install latest stable:
-
-```bash
 $ npm i -D @zerodevx/svelte-img
 ```
 
-**NOTE**
+Add `imagetools` plugin into your `vite.config.js`:
 
-This is still in `pre-release` so install with the `@next` tag:
+```js
+import { sveltekit } from '@sveltejs/kit/vite'
+import { imagetools } from '@zerodevx/svelte-img'
 
-```bash
-$ npm i -D @zerodevx/svelte-img@next
+/** @type {import('vite').UserConfig} */
+const config = {
+  plugins: [sveltekit(), imagetools()]
+}
+
+export default config
 ```
 
-### Use as a Svelte component
+## Usage
 
-Simply consume anywhere in your app:
+Use anywhere in your Svelte app:
 
-`MyComponent.svelte`
-
+<!-- prettier-ignore -->
 ```html
 <script>
-  import Img from '@zerodevx/svelte-img`
+// Import original max-sized image with `?run` query param.
+import cat from '$lib/assets/cat.jpg?run'
+import { Img } from '@zerodevx/svelte-img'
 </script>
 
-<style>
-  .container {
-    width: 100%;
-    max-width: 800px;
-    height: 500px;
-  }
-</style>
-
-<div class="container">
-  <img
-    srcset="/images/hello-800.jpg 800w, /images/hello-480.jpg 480w"
-    sizes="(max-width: 600px) 480px, 800px"
-    src="/images/hello-800.jpg"
-    alt="hello"
-    placeholder="/images/hello-20.jpg"
-  />
-</div>
+<Img class="any classes" src="{cat}" alt="Cute cat" />
 ```
 
-### Use as native Web Component
-
-Just load the web component definition from CDN then use anywhere.
+The `<Img>` tag renders into:
 
 ```html
-<head>
-  ...
-  <!-- Load the web component definition -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@zerodevx/svelte-img@0"></script>
-</head>
-<body>
-  ...
-  <!-- Use anywhere -->
-  <div class="explicitly-sized-container">
-    <svelte-img src="/image.jpg"></svelte-img>
-  </div>
-</body>
+<picture>
+  <source
+    type="image/avif"
+    srcset="path/to/avif/480 480w, path/to/avif/1024 1024w, path/to/avif/1920 1920w"
+  />
+  <source
+    type="image/webp"
+    srcset="path/to/webp/480 480w, path/to/webp/1024 1024w, path/to/webp/1920 1920w"
+  />
+  <img
+    class="any classes"
+    src="path/to/jpg/480"
+    srcset="path/to/jpg/480 480w, path/to/jpg/1024 1024w, path/to/jpg/1920 1920w"
+    loading="lazy"
+    decoding="async"
+    style='background: url("data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAQCdASoQAAwABUB8JbACdACVHAuzHEAA+FXw/vPuIDGE/UU8XBsY0aVUcxdGEcG5CngK2JQO7wxCmgwPJrlpw4REDWFeMX1yfLUHBxkTmnPYhBDAP1QyVOF7EB/AAAA=") no-repeat center/cover'
+    alt="Cute cat"
+  />
+</picture>
 ```
-
-Or you can
-[download](https://raw.githubusercontent.com/zerodevx/svelte-img/master/dist/svelte-img.js) the
-script and host it yourself.
-
-## Contributing
-
-Fork, clone and install dependencies:
-
-```bash
-$ git clone https://github.com/<username>/svelte-img
-$ cd svelte-img
-$ npm i
-```
-
-Start the dev server:
-
-```bash
-$ npm run dev
-```
-
-Create a new branch, make changes and commit:
-
-```bash
-$ git checkout -b my-contribution
-$ git add -A
-$ git commit -m <message>
-```
-
-Lint the code:
-
-```bash
-$ npm run lint
-```
-
-Then raise a PR.
 
 ## License
 
