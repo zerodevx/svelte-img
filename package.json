@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Elegant responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {

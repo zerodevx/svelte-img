@@ -1,5 +1,4 @@
 <script>
-import '../app.postcss'
 import cat01 from './cat01.jpg?run&width=480;1024;1920;2560'
 import cat02 from './cat02.jpg?run'
 import cat03 from './cat03.jpg?run'

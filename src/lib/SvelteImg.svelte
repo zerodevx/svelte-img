@@ -1,6 +1,4 @@
 <script>
-import { createEventDispatcher } from 'svelte'
-
 export let src = []
 export let loading = 'lazy'
 export let decoding = 'async'
@@ -8,14 +6,19 @@ export let ref = {}
 
 const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']
 const blacklist = ['src', 'srcset', 'loading', 'decoding', 'style', 'ref']
-const fire = createEventDispatcher()
 let props = {}
 let image = {}
 let sources = []
 
 $: if (src.length) {
-  const list = [...src]
-  const lqip = list.pop().base64
+  const { list, lqip } = src.reduce(
+    (a, c) => {
+      if (c.base64) a.lqip = c.base64
+      else a.list.push(c)
+      return a
+    },
+    { list: [], lqip: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=' }
+  )
   const groups = []
   for (const f of priority) {
     const group = list.filter((i) => i.format === f)
@@ -40,20 +43,22 @@ $: {
 }
 </script>
 
-<picture>
-  {#each sources as { format, srcset }}
-    <source type="image/{format}" {srcset} />
-  {/each}
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <img
-    src={image.src}
-    srcset={image.srcset}
-    {loading}
-    {decoding}
-    style="background:url('{image.lqip}') no-repeat center/cover"
-    bind:this={ref}
-    on:click={() => fire('click')}
-    on:load={() => fire('load')}
-    {...props}
-  />
-</picture>
+{#if image.src}
+  <picture>
+    {#each sources as { format, srcset }}
+      <source type="image/{format}" {srcset} />
+    {/each}
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <img
+      src={image.src}
+      srcset={image.srcset}
+      {loading}
+      {decoding}
+      style="background:url('{image.lqip}') no-repeat center/cover"
+      bind:this={ref}
+      on:click
+      on:load
+      {...props}
+    />
+  </picture>
+{/if}
