@@ -15,7 +15,7 @@ import cat12 from './cat12.jpg?run&width=640&height=640&fit=cover'
 import cat13 from './cat13.jpg?run&width=640&height=640&fit=cover'
 import cat14 from './cat14.jpg?run&width=640&height=640&fit=cover'
 import cat15 from './cat15.jpg?run&width=640&height=640&fit=cover'
-import Img from '$lib/index.svelte'
+import Img from '$lib/index.js'
 
 const features = [
   ['Full width responsive images served in multiple widths and next-gen formats.', cat02],
