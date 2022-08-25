@@ -1,14 +1,16 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Elegant responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
-  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development vite dev",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "git checkout gh-pages && cp -R build/ . && git add -A && git commit -m 'Update' && git checkout master && git push origin gh-pages",
     "package": "svelte-kit sync && svelte-package",
+    "publish": "cd package && npm publish --access public",
+    "publish:next": "cd package && npm publish --access public --tag next",
     "check": "svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
     "test": "playwright test",
@@ -23,7 +25,7 @@
     "@playwright/test": "^1.25.1",
     "@rollup/pluginutils": "^4.2.1",
     "@sveltejs/adapter-static": "^1.0.0-next.39",
-    "@sveltejs/kit": "^1.0.0-next.435",
+    "@sveltejs/kit": "^1.0.0-next.437",
     "@sveltejs/package": "^1.0.0-next.1",
     "@tailwindcss/typography": "^0.5.4",
     "autoprefixer": "^10.4.8",
@@ -52,5 +54,6 @@
     "progressive",
     "image",
     "lazy-load"
-  ]
+  ],
+  "type": "module"
 }

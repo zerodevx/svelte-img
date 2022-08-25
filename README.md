@@ -16,7 +16,7 @@ Add `imagetools` plugin into your `vite.config.js`:
 
 ```js
 import { sveltekit } from '@sveltejs/kit/vite'
-import { imagetools } from '@zerodevx/svelte-img'
+import { imagetools } from '@zerodevx/svelte-img/vite'
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -35,13 +35,13 @@ Use anywhere in your Svelte app:
 <script>
 // Import original max-sized image with `?run` query param.
 import cat from '$lib/assets/cat.jpg?run'
-import { Img } from '@zerodevx/svelte-img'
+import Img from '@zerodevx/svelte-img'
 </script>
 
 <Img class="any classes" src="{cat}" alt="Cute cat" />
 ```
 
-The `<Img>` tag renders into:
+The image component renders into:
 
 ```html
 <picture>
@@ -59,7 +59,7 @@ The `<Img>` tag renders into:
     srcset="path/to/jpg/480 480w, path/to/jpg/1024 1024w, path/to/jpg/1920 1920w"
     loading="lazy"
     decoding="async"
-    style='background: url("data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAQCdASoQAAwABUB8JbACdACVHAuzHEAA+FXw/vPuIDGE/UU8XBsY0aVUcxdGEcG5CngK2JQO7wxCmgwPJrlpw4REDWFeMX1yfLUHBxkTmnPYhBDAP1QyVOF7EB/AAAA=") no-repeat center/cover'
+    style='background: url("data:image/webp;base64,XXX") no-repeat center/cover'
     alt="Cute cat"
   />
 </picture>

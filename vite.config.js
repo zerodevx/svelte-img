@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite'
-import { imagetools } from './src/lib/imagetools'
+import { imagetools } from './src/lib/vite'
 
 /** @type {import('vite').UserConfig} */
 const config = {
