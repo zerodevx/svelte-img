@@ -15,13 +15,12 @@ function lqip(cfg, ctx) {
 }
 
 function set(url, defaults = 'width=480;1024;1920&format=avif;webp;jpg') {
-  const { searchParams } = url
-  const out = new URLSearchParams(defaults)
-  for (const [key, val] of searchParams.entries()) out.set(key, val)
-  return out
+  const merge = new URLSearchParams(defaults)
+  for (const [key, val] of url.searchParams.entries()) merge.set(key, val)
+  return merge
 }
 
-function main(opts) {
+function main(overrides = {}) {
   return imagetools({
     defaultDirectives: (url) => set(url),
     extendTransforms: (builtins) => [...builtins, lqip],
@@ -31,11 +30,10 @@ function main(opts) {
     }),
     resolveConfigs: (e, f) => {
       const idx = e.findIndex((i) => i[0] === 'lqip')
-      let lqip = 16
-      if (idx > -1) lqip = parseInt(e.splice(idx, 1)[0][1][0])
+      const lqip = idx > -1 ? parseInt(e.splice(idx, 1)[0][1][0]) : 16
       return [...resolveConfigs(e, f), { lqip }]
     },
-    ...opts
+    ...overrides
   })
 }
 

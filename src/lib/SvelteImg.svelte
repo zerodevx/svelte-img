@@ -1,31 +1,29 @@
 <script>
 export let src = []
+export let sizes = undefined
 export let loading = 'lazy'
 export let decoding = 'async'
-export let ref = {}
+export let ref = undefined
 
-const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']
-const blacklist = ['src', 'srcset', 'loading', 'decoding', 'style', 'ref']
-let props = {}
 let image = {}
 let sources = []
 
 $: if (src.length) {
   const { list, lqip } = src.reduce(
     (a, c) => {
-      if (c.base64) a.lqip = c.base64
+      if (c.base64) a.lqip = `url('${c.base64}') no-repeat center/cover`
       else a.list.push(c)
       return a
     },
-    { list: [], lqip: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=' }
+    { list: [], lqip: undefined }
   )
   const groups = []
-  for (const f of priority) {
-    const group = list.filter((i) => i.format === f)
+  for (const format of ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']) {
+    const group = list.filter((i) => i.format === format)
     if (group.length) {
       group.sort((a, b) => a.width - b.width)
       groups.push({
-        format: f,
+        format,
         srcset: group.reduce((a, c) => [...a, `${c.src} ${c.width}w`], []).join(','),
         src: group[0].src
       })
@@ -34,31 +32,25 @@ $: if (src.length) {
   image = { ...groups.pop(), lqip }
   sources = groups
 }
-
-$: {
-  props = {}
-  for (const tag in $$props) {
-    if (!blacklist.includes(tag)) props[tag] = $$props[tag]
-  }
-}
 </script>
 
 {#if image.src}
   <picture>
     {#each sources as { format, srcset }}
-      <source type="image/{format}" {srcset} />
+      <source type="image/{format}" {srcset} {sizes} />
     {/each}
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
       src={image.src}
       srcset={image.srcset}
+      {sizes}
       {loading}
       {decoding}
-      style="background:url('{image.lqip}') no-repeat center/cover"
+      style:background={image.lqip}
       bind:this={ref}
       on:click
       on:load
-      {...props}
+      {...$$restProps}
     />
   </picture>
 {/if}

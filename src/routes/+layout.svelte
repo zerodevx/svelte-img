@@ -5,6 +5,7 @@ import { dev } from '$app/env'
 
 <svelte:head>
   <title>svelte-img</title>
+  <meta name="description" content="Elegant responsive images for SvelteKit." />
   {#if !dev}
     <script>
     ;(function () {
