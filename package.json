@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Elegant responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {
@@ -18,27 +18,27 @@
     "format": "prettier --write --plugin-search-dir=. ."
   },
   "dependencies": {
-    "imagetools-core": "^3.0.3",
-    "vite-imagetools": "^4.0.4"
+    "imagetools-core": "3.0.3",
+    "vite-imagetools": "4.0.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.25.1",
     "@rollup/pluginutils": "^4.2.1",
     "@sveltejs/adapter-static": "^1.0.0-next.39",
-    "@sveltejs/kit": "^1.0.0-next.444",
-    "@sveltejs/package": "^1.0.0-next.1",
+    "@sveltejs/kit": "1.0.0-next.449",
+    "@sveltejs/package": "^1.0.0-next.3",
     "@tailwindcss/typography": "^0.5.4",
     "autoprefixer": "^10.4.8",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "magic-string": "^0.26.2",
+    "magic-string": "^0.26.3",
     "postcss": "^8.4.16",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
     "svelte": "^3.49.0",
-    "svelte-check": "^2.8.1",
+    "svelte-check": "^2.9.0",
     "svelte-preprocess": "^4.10.7",
     "tailwindcss": "^3.1.8",
     "tslib": "^2.4.0",
