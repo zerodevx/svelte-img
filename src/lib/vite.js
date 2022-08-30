@@ -2,7 +2,7 @@ import { imagetools } from 'vite-imagetools'
 import { resize, format, setMetadata, metadataFormat, resolveConfigs } from 'imagetools-core'
 
 function lqip(cfg, ctx) {
-  if ('lqip' in cfg) {
+  if (cfg.lqip) {
     const r = resize({ width: cfg.lqip }, ctx)
     const f = format({ format: 'webp', quality: '20' }, ctx)
     return async function (image) {
