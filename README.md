@@ -116,7 +116,7 @@ import Img from '@zerodevx/svelte-img'
 
 By default, LQIPs are 16px in width and set to `cover` the full image dimension. Increase for a
 higher quality LQIP at the expense of a larger `base64`, or set to 1px for a dominant single-colour
-background.
+background. To disable LQIP completely, set `?lqip=0`.
 
 <!-- prettier-ignore -->
 ```html
@@ -125,7 +125,7 @@ import src from '$lib/a/cat.jpg?lqip=1&run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
-<!-- Should render a dominant single-colour background -->
+<!-- Render dominant colour background -->
 <Img {src} alt="cat" >
 ```
 

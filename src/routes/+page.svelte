@@ -1,5 +1,5 @@
 <script>
-import cat01 from './cat01.jpg?run&width=480;1024;1920;2560'
+import cat01 from './cat01.jpg?run&width=480;1024;1920;2560&height=1024'
 import cat02 from './cat02.jpg?run'
 import cat03 from './cat03.jpg?run'
 import cat04 from './cat04.jpg?run'
@@ -18,7 +18,7 @@ import Img from '$lib/index.js'
 
 const features = [
   [
-    'Render the bare minimum, minimally invasive, HTML code to represent responsive images, served in multiple widths and next-gen formats.',
+    'Full width image in 10 variants - <code>avif/webp/jpg</code> formats at <code>480/1024/1920</code> widths, and a LQIP background.',
     cat02
   ],
   [
@@ -26,7 +26,7 @@ const features = [
     cat03
   ],
   [
-    'Images still work without Javascript. Try disabling JS and refreshing the page. Also try checking the lighthouse score.',
+    'Images still work without Javascript. Try disabling JS and refreshing the page. Also check out the lighthouse score.',
     cat04
   ]
 ]
@@ -46,11 +46,20 @@ let selected = 0
   </div>
 </div>
 
-<div class="max-w-7xl mx-auto prose text-center px-4 mb-28">
-  {#each features as f}
-    <p>{@html f[0]}</p>
-    <Img class="w-full h-128 object-cover" src={f[1]} alt="cat" />
-  {/each}
+<div class="max-w-7xl mx-auto prose px-4 mb-28">
+  <h1>svelte-img</h1>
+  <blockquote>
+    Render the bare minimum, minimally invasive, LQIP-included HTML code to represent responsive
+    images, served in multiple widths and next-gen formats.
+  </blockquote>
+  <ol>
+    {#each features as f}
+      <li>
+        <p>{@html f[0]}</p>
+        <Img class="w-full h-128 object-cover" src={f[1]} alt="cat" />
+      </li>
+    {/each}
+  </ol>
 
   <p>
     Image <code>src</code> can be dynamically updated - well, this requires Javascript because interactivity.

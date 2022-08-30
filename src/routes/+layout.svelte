@@ -1,6 +1,6 @@
 <script>
 import '../app.postcss'
-import { dev } from '$app/env'
+import { dev } from '$app/environment'
 </script>
 
 <svelte:head>
