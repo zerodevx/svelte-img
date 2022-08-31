@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Elegant responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@playwright/test": "^1.25.1",
     "@rollup/pluginutils": "^4.2.1",
-    "@sveltejs/adapter-static": "^1.0.0-next.39",
+    "@sveltejs/adapter-static": "1.0.0-next.39",
     "@sveltejs/kit": "1.0.0-next.449",
     "@sveltejs/package": "^1.0.0-next.3",
     "@tailwindcss/typography": "^0.5.4",

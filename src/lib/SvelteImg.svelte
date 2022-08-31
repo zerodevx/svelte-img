@@ -23,9 +23,9 @@ $: if (src.length) {
     if (group.length) {
       group.sort((a, b) => a.width - b.width)
       groups.push({
-        format,
+        format: format === 'jpg' ? 'jpeg' : format,
         srcset: group.reduce((a, c) => [...a, `${c.src} ${c.width}w`], []).join(','),
-        src: group[0].src
+        src: group[group.length - 1].src
       })
     }
   }

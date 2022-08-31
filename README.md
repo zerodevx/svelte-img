@@ -58,7 +58,7 @@ The image component renders into:
   />
   <img
     class="cool cats"
-    src="path/to/jpg/480"
+    src="path/to/jpg/1920"
     srcset="path/to/jpg-480 480w, path/to/jpg-1024 1024w, path/to/jpg-1920 1920w"
     loading="lazy"
     decoding="async"
