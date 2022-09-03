@@ -7,9 +7,6 @@ const dev = process.env.NODE_ENV === 'development'
 const config = {
   kit: {
     adapter: adapter(),
-    prerender: {
-      default: true
-    },
     paths: {
       base: dev ? '' : '/svelte-img'
     },

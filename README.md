@@ -58,7 +58,7 @@ The image component renders into:
   />
   <img
     class="cool cats"
-    src="path/to/jpg/1920"
+    src="path/to/jpg-1920"
     srcset="path/to/jpg-480 480w, path/to/jpg-1024 1024w, path/to/jpg-1920 1920w"
     loading="lazy"
     decoding="async"
@@ -81,7 +81,7 @@ To change this globally, edit your `vite.config.js`:
 
 ```js
 import { sveltekit } from '@sveltejs/kit/vite'
-import { imagetools, set } from '@zerodevx/svelte-img/vite'
+import { imagetools } from '@zerodevx/svelte-img/vite'
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -89,8 +89,8 @@ const config = {
     sveltekit(),
     imagetools({
       // By default, directives are `?width=480;1024;1920&format=avif;webp;jpg`
-      defaultDirectives: (url) => set(url, '?width=768;1920&format=avif;jpg')
-      // Now this generates 5 variants - `avif/jpg` formats at `768/1024` + LQIP
+      // Now we change it to generate 5 variants instead - `avif/jpg` formats at `640/1280` + LQIP
+      defaultDirectives: () => new URLSearchParams('?width=640;1280&format=avif;jpg')
     })
   ]
 }
@@ -105,28 +105,29 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?width=768;1920&format=avif;jpg&run'
+// We override defaults to generate 5 variants instead - `avif/jpg` formats at `768/1024` + LQIP
+import src from '$lib/a/cat.jpg?run&width=640;1024&format=avif;jpg'
 import Img from '@zerodevx/svelte-img'
 </script>
 
-<Img {src} alt="cat" >
+<Img {src} alt="cat" />
 ```
 
 #### Change LQIP width
 
 By default, LQIPs are 16px in width and set to `cover` the full image dimension. Increase for a
 higher quality LQIP at the expense of a larger `base64`, or set to 1px for a dominant single-colour
-background. To disable LQIP completely, set `?lqip=0`.
+background. To disable LQIP completely, set `?run&lqip=0`.
 
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?lqip=1&run'
+import src from '$lib/a/cat.jpg?run&lqip=1'
 import Img from '@zerodevx/svelte-img'
 </script>
 
 <!-- Render dominant colour background -->
-<Img {src} alt="cat" >
+<Img {src} alt="cat" />
 ```
 
 #### Other transformations
@@ -138,21 +139,23 @@ of transformation directives offered by
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?&height=600&fit=cover&normalize&run'
+import src from '$lib/a/cat.jpg?run&height=600&fit=cover&normalize'
 import Img from '@zerodevx/svelte-img'
 </script>
 
-<Img {src} alt="cat" >
+<Img {src} alt="cat" />
 ```
 
 #### Remote images from an API
 
-The `svelte-img` component can be used on its own and accepts `src` as an array of image objects
-like so:
+Use the `svelte-img` component on its own by passing an array of image objects into `src` like so:
 
 <!-- prettier-ignore -->
-```js
-[
+```html
+<script>
+import Img from '@zerodevx/svelte-img'
+
+const src = [
   { format: 'avif', src: 'https://x.com/path/to/avif-480', width: 480 },
   { format: 'webp', src: 'https://x.com//path/to/webp-480', width: 480 },
   { format: 'jpg', src: 'https://x.com//path/to/jpg-480', width: 480 },
@@ -160,16 +163,19 @@ like so:
   ... // all other variants
   { base64: 'data:image/webp;base64,XXX' } // an optional LQIP with `base64` key
 ]
+</script>
+
+<Img {src} alt="hello" />
 ```
 
-The order doesn't matter; `svelte-img` internally sorts out the rendering priority based on:
+The order doesn't matter; `svelte-img` internally sorts out the source priority based on:
 
 ```js
 // Highest to lowest
 const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']
 ```
 
-#### A better blur
+#### Blurred image placeholders
 
 Natively, browsers do already apply _some_ blur when displaying low resolution images. That's enough
 for me, but you can apply your own using CSS.
@@ -181,7 +187,7 @@ import src from '$lib/a/cat.jpg?run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
-<Img {src} alt="cat" >
+<Img {src} alt="cat" />
 
 <style>
 :global(img)::after {
@@ -196,9 +202,10 @@ import Img from '@zerodevx/svelte-img'
 
 ## To do
 
-- [ ] Add type annotations
+- [ ] Add typings
 - [ ] Add tests
-- [ ] Document more features
+- [ ] Improve docs
+- [ ] Improve demo
 
 ## License
 

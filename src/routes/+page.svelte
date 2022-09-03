@@ -18,11 +18,11 @@ import Img from '$lib/index.js'
 
 const features = [
   [
-    'Full width image in 10 variants - <code>avif/webp/jpg</code> formats at <code>480/1024/1920</code> widths, and a LQIP background.',
+    'Full width image in 10 variants - <code>avif/webp/jpg</code> formats at <code>480/1024/1920</code> widths, and a low-quality image placeholder (LQIP) background.',
     cat02
   ],
   [
-    'Delegate the heavy lifting to native browser handlers and existing build pipelines. Render <strong>&lt;img&gt;</strong> tags with modern defaults, with other component props spread into it.',
+    'Delegate the heavy lifting to native browser handlers and existing build pipelines. The <code>svelte-img</code> component is intended to be a drop-in replacement of the native <code>&lt;img&gt;</code> tag and works as equivalently as possible.',
     cat03
   ],
   [
@@ -52,6 +52,7 @@ let selected = 0
     Render the bare minimum, minimally invasive, LQIP-included HTML code to represent responsive
     images, served in multiple widths and next-gen formats.
   </blockquote>
+
   <ol>
     {#each features as f}
       <li>
@@ -59,32 +60,33 @@ let selected = 0
         <Img class="w-full h-128 object-cover" src={f[1]} alt="cat" />
       </li>
     {/each}
+    <li>
+      <p>
+        Image <code>src</code> can be dynamically updated - well, this requires Javascript because interactivity.
+      </p>
+      <div class="flex flex-col md:flex-row">
+        <div class="flex justify-center">
+          <Img
+            class="w-96 h-96 md:w-128 md:h-128 object-cover"
+            src={dynamic[selected]}
+            alt="cat"
+            width="1"
+            height="1"
+          />
+        </div>
+        <div class="flex flex-wrap justify-center mt-4 md:flex-1 md:mt-6">
+          {#each dynamic as src, i}
+            <Img
+              class="w-32 h-32 md:w-36 md:h-36 m-2 border-4 cursor-pointer {selected === i
+                ? 'border-red-500'
+                : 'border-gray-100'}"
+              {src}
+              alt="cat"
+              on:click={() => (selected = i)}
+            />
+          {/each}
+        </div>
+      </div>
+    </li>
   </ol>
-
-  <p>
-    Image <code>src</code> can be dynamically updated - well, this requires Javascript because interactivity.
-  </p>
-  <div class="flex flex-col md:flex-row">
-    <div class="flex justify-center">
-      <Img
-        class="w-96 h-96 md:w-128 md:h-128 object-cover"
-        src={dynamic[selected]}
-        alt="cat"
-        width="1"
-        height="1"
-      />
-    </div>
-    <div class="flex flex-wrap justify-center mt-4 md:flex-1 md:mt-6">
-      {#each dynamic as src, i}
-        <Img
-          class="w-32 h-32 md:w-36 md:h-36 m-2 border-4 cursor-pointer {selected === i
-            ? 'border-red-500'
-            : 'border-gray-100'}"
-          {src}
-          alt="cat"
-          on:click={() => (selected = i)}
-        />
-      {/each}
-    </div>
-  </div>
 </div>
