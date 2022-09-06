@@ -200,6 +200,22 @@ import Img from '@zerodevx/svelte-img'
 </style>
 ```
 
+### New from v1.1
+
+#### Special effects (Reveal)
+
+Reveal images with a fade-in effect (aka medium.com) when they are loaded _and_ in the viewport.
+
+<!-- prettier-ignore -->
+```html
+<script>
+import src from '$lib/a/cat.jpg?run'
+import { FxReveal as Img } from '@zerodevx/svelte-img'
+</script>
+
+<Img {src} alt="cat" />
+```
+
 ## To do
 
 - [ ] Add typings
