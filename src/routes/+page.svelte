@@ -14,7 +14,7 @@ import cat12 from './cat12.jpg?run&width=640&height=640&fit=cover'
 import cat13 from './cat13.jpg?run&width=640&height=640&fit=cover'
 import cat14 from './cat14.jpg?run&width=640&height=640&fit=cover'
 import cat15 from './cat15.jpg?run&width=640&height=640&fit=cover'
-import Img from '$lib/index.js'
+import Img, { FxReveal } from '$lib/index.js'
 
 const features = [
   [
@@ -34,8 +34,8 @@ const dynamic = [cat05, cat06, cat07, cat08, cat09, cat10, cat11, cat12, cat13, 
 let selected = 0
 </script>
 
-<div class="relative w-full h-screen bg-gray-900 text-white text-center mb-20">
-  <Img class="w-full h-full object-cover" src={cat01} alt="cat" loading="eager" />
+<div class="relative bg-gray-900 text-white text-center mb-20">
+  <Img class="w-full h-screen object-cover" src={cat01} alt="cat" loading="eager" />
   <div class="absolute inset-0 flex flex-col items-center justify-center prose-2xl max-w-none px-2">
     <h1>svelte-img</h1>
     <p>Elegant responsive images for SvelteKit.</p>
@@ -55,9 +55,9 @@ let selected = 0
 
   <ol>
     {#each features as f}
-      <li>
+      <li class="mb-12">
         <p>{@html f[0]}</p>
-        <Img class="w-full h-128 object-cover" src={f[1]} alt="cat" />
+        <FxReveal class="w-full h-128 object-cover" src={f[1]} alt="cat" />
       </li>
     {/each}
     <li>
@@ -66,24 +66,22 @@ let selected = 0
       </p>
       <div class="flex flex-col md:flex-row">
         <div class="flex justify-center">
-          <Img
-            class="w-96 h-96 md:w-128 md:h-128 object-cover"
-            src={dynamic[selected]}
-            alt="cat"
-            width="1"
-            height="1"
-          />
+          <div class="w-96 h-96 md:w-128 md:h-128">
+            <Img class="w-full h-full not-prose" src={dynamic[selected]} alt="cat" />
+          </div>
         </div>
         <div class="flex flex-wrap justify-center mt-4 md:flex-1 md:mt-6">
           {#each dynamic as src, i}
-            <Img
-              class="w-32 h-32 md:w-36 md:h-36 m-2 border-4 cursor-pointer {selected === i
-                ? 'border-red-500'
-                : 'border-gray-100'}"
-              {src}
-              alt="cat"
-              on:click={() => (selected = i)}
-            />
+            <div class="w-32 h-32 md:w-36 md:h-36 m-2">
+              <Img
+                class="w-full h-full border-4 cursor-pointer {selected === i
+                  ? 'border-red-500'
+                  : 'border-gray-100'}"
+                {src}
+                alt="cat"
+                on:click={() => (selected = i)}
+              />
+            </div>
           {/each}
         </div>
       </div>

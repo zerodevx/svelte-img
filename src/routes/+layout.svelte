@@ -7,22 +7,14 @@ import { dev } from '$app/environment'
   <title>svelte-img</title>
   <meta name="description" content="Elegant responsive images for SvelteKit." />
   {#if !dev}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6QMRQS31JH"></script>
     <script>
-    ;(function () {
-      if (location.protocol === 'https:') {
-        window.ga =
-          window.ga ||
-          function () {
-            ;(ga.q = ga.q || []).push(arguments)
-          }
-        ga.l = +new Date()
-        ga('create', 'UA-66946548-3', 'auto')
-        ga('send', 'pageview')
-        var el = document.createElement('script')
-        el.src = 'https://www.google-analytics.com/analytics.js'
-        document.head.appendChild(el)
-      }
-    })()
+    window.dataLayer = window.dataLayer || []
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag('js', new Date())
+    gtag('config', 'G-6QMRQS31JH')
     </script>
   {/if}
 </svelte:head>
