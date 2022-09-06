@@ -6,9 +6,10 @@ function lqip(cfg, ctx) {
     const r = resize({ width: cfg.lqip }, ctx)
     const f = format({ format: 'webp', quality: '20' }, ctx)
     return async function (image) {
-      const buffer = await f(r(image)).toBuffer()
-      setMetadata(image, 'base64', `data:image/webp;base64,${buffer.toString('base64')}`)
-      return image
+      const img = f(r(image))
+      const buffer = await img.toBuffer()
+      setMetadata(img, 'base64', `data:image/webp;base64,${buffer.toString('base64')}`)
+      return img
     }
   }
 }
