@@ -20,7 +20,7 @@ function main(overrides = {}) {
     extendTransforms: (builtins) => [...builtins, lqip],
     extendOutputFormats: (builtinOutputFormats) => ({
       ...builtinOutputFormats,
-      run: () => metadataFormat(['format', 'src', 'width', 'base64'])
+      run: () => metadataFormat(['format', 'src', 'width', 'height', 'base64'])
     }),
     resolveConfigs: (e, f) => {
       if (e.findIndex((i) => i[0] === 'run') > -1) {
