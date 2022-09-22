@@ -14,22 +14,8 @@ import cat12 from './cat12.jpg?run&width=640&height=640&fit=cover'
 import cat13 from './cat13.jpg?run&width=640&height=640&fit=cover'
 import cat14 from './cat14.jpg?run&width=640&height=640&fit=cover'
 import cat15 from './cat15.jpg?run&width=640&height=640&fit=cover'
-import Img, { FxReveal } from '$lib/index.js'
+import Img, { FxReveal, FxParallax } from '$lib/index.js'
 
-const features = [
-  [
-    'Full width image in 10 variants - <code>avif/webp/jpg</code> formats at <code>480/1024/1920</code> widths, and a low-quality image placeholder (LQIP) background.',
-    cat02
-  ],
-  [
-    'Delegate the heavy lifting to native browser handlers and existing build pipelines. The <code>svelte-img</code> component is intended to be a drop-in replacement of the native <code>&lt;img&gt;</code> tag and works as equivalently as possible.',
-    cat03
-  ],
-  [
-    'Images still work without Javascript. Try disabling JS and refreshing the page. Also check out the lighthouse score.',
-    cat04
-  ]
-]
 const dynamic = [cat05, cat06, cat07, cat08, cat09, cat10, cat11, cat12, cat13, cat14, cat15]
 let selected = 0
 </script>
@@ -46,7 +32,7 @@ let selected = 0
   </div>
 </div>
 
-<div class="max-w-7xl mx-auto prose px-4 mb-28">
+<div class="max-w-7xl mx-auto prose px-4 mb-96">
   <h1>svelte-img</h1>
   <blockquote>
     Render the bare minimum, minimally invasive, LQIP-included HTML code to represent responsive
@@ -54,15 +40,36 @@ let selected = 0
   </blockquote>
 
   <ol>
-    {#each features as f}
-      <li class="mb-12">
-        <p>{@html f[0]}</p>
-        <FxReveal class="w-full h-128 object-cover" src={f[1]} alt="cat" />
-      </li>
-    {/each}
+    <li class="mb-12">
+      <p>
+        Easily render a responsive image in 10 variants - <code>avif/webp/jpg</code> formats at
+        <code>480/1024/1920</code> widths, with a low-quality image placeholder (LQIP) background.
+      </p>
+      <Img class="w-full h-128 object-cover" src={cat02} alt="cat" />
+    </li>
+
+    <li class="mb-12">
+      <p>
+        Or reveal images with fade-in special effects. Delegate the heavy lifting to native browser
+        handlers and existing build pipelines. The <code>svelte-img</code>
+        component is intended to be a drop-in replacement of the native <code>&lt;img&gt;</code> tag
+        and tries to work as equivalently as possible.
+      </p>
+      <FxReveal class="w-full h-128 object-cover" src={cat03} alt="cat" />
+    </li>
+
+    <li class="mb-12">
+      <p>
+        Or add parallax special effects to images. All images should still work without Javascript.
+        Try disabling JS and refreshing the page. Also check out the lighthouse score.
+      </p>
+      <FxParallax class="w-full h-128" src={cat04} alt="cat" />
+    </li>
+
     <li>
       <p>
-        Image <code>src</code> can be dynamically updated - well, this requires Javascript because interactivity.
+        Image <code>src</code> can be dynamically updated - well, this requires Javascript because
+        <em>interactivity</em>.
       </p>
       <div class="flex flex-col md:flex-row">
         <div class="flex justify-center">
