@@ -60,6 +60,8 @@ The image component renders into:
     class="cool cats"
     src="path/to/jpg-1920"
     srcset="path/to/jpg-480 480w, path/to/jpg-1024 1024w, path/to/jpg-1920 1920w"
+    width="1920"
+    height="1080"
     loading="lazy"
     decoding="async"
     style='background: url("data:image/webp;base64,XXX") no-repeat center/cover'
@@ -156,10 +158,10 @@ Use the `svelte-img` component on its own by passing an array of image objects i
 import Img from '@zerodevx/svelte-img'
 
 const src = [
-  { format: 'avif', src: 'https://x.com/path/to/avif-480', width: 480 },
-  { format: 'webp', src: 'https://x.com//path/to/webp-480', width: 480 },
-  { format: 'jpg', src: 'https://x.com//path/to/jpg-480', width: 480 },
-  { format: 'avif', src: 'https://x.com//path/to/avif-1024', width: 1024 },
+  { format: 'avif', src: 'https://x.com/path/to/avif-480', width: 480, height: 120 },
+  { format: 'webp', src: 'https://x.com//path/to/webp-480', width: 480, height: 120 },
+  { format: 'jpg', src: 'https://x.com//path/to/jpg-480', width: 480, height: 120 },
+  { format: 'avif', src: 'https://x.com//path/to/avif-1024', width: 1024, height: 256 },
   ... // all other variants
   { base64: 'data:image/webp;base64,XXX' } // an optional LQIP with `base64` key
 ]
@@ -200,9 +202,9 @@ import Img from '@zerodevx/svelte-img'
 </style>
 ```
 
-### New from v1.1
+## Special Effects
 
-#### Special effects (Reveal)
+#### Fade-in on reveal
 
 Reveal images with a fade-in effect (aka medium.com) when they are loaded _and_ in the viewport.
 
@@ -213,7 +215,38 @@ import src from '$lib/a/cat.jpg?run'
 import { FxReveal as Img } from '@zerodevx/svelte-img'
 </script>
 
-<Img {src} alt="cat" />
+<Img class="my-img" {src} alt="cat" />
+
+<style>
+:global(.my-img) {
+  width: 640px;
+  height: 480px;
+  ...
+  /* These CSS vars are exposed */
+  --reveal-scale: 1.03;
+  --reveal-opacity-duration: 1s;
+  --reveal-transform-duration: 0.6s;
+}
+</style>
+```
+
+#### Parallax
+
+Apply a parallax effect to an image. `factor` is a number between `0` to `1`, where:
+
+- `1` behaves normally (image scrolls along with the page at same speed);
+- and `0` essentially fixes the image on the page.
+
+The default factor is `0.75`.
+
+<!-- prettier-ignore -->
+```html
+<script>
+import src from '$lib/a/cat.jpg?run'
+import { FxParallax as Img } from '@zerodevx/svelte-img'
+</script>
+
+<Img class="w-full h-64" factor="0.5" {src} alt="cat" />
 ```
 
 ## To do
