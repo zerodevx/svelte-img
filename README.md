@@ -1,9 +1,14 @@
 # svelte-img
 
-> Elegant responsive images for SvelteKit.
+> High-performance responsive images for SvelteKit.
 
 Automatically transform local images into multiple widths and next-gen formats, then render a
 minimally invasive HTML representation into your SvelteKit project.
+
+Includes special effects:
+
+- [x] Fade-in on image reveal
+- [x] Parallax vertical scroll effect
 
 Demo: https://zerodevx.github.io/svelte-img/
 
@@ -232,10 +237,12 @@ import { FxReveal as Img } from '@zerodevx/svelte-img'
 
 #### Parallax
 
-Apply a parallax effect to an image. `factor` is a number between `0` to `1`, where:
+Apply a parallax effect to an image, where `factor` is a decimal value between 0 and 1 that controls
+how much slower the element scrolls relative to the scrolling speed:
 
-- `1` behaves normally (image scrolls along with the page at same speed);
-- and `0` essentially fixes the image on the page.
+- A value closer to 0 is faster, while a value closer to 1 is slower.
+- A value of 1 behaves normally.
+- A value of 0 effectively makes the element scroll fixed with the page.
 
 The default factor is `0.75`.
 
