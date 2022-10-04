@@ -16,27 +16,34 @@ let screenHeight = 0
 let stamp = 0
 let height = 100
 let offset = 0
+let normalized = 0
 
 function entered(e) {
   stamp = scrollY + e.detail.boundingClientRect.top
   inview = true
 }
 
+function resized() {
+  screenHeight = window.screen.height
+}
+
+$: normalized = Math.abs(factor - 1)
+
 $: if (screenHeight && offsetHeight) {
-  height = 100 + Math.abs(factor - 1) * (screenHeight / offsetHeight - 1) * 100
+  height = 100 + normalized * (screenHeight / offsetHeight) * 100
 }
 
 $: if (inview) {
-  offset = Math.floor((scrollY - stamp) * Math.abs(factor - 1))
+  offset = Math.floor((scrollY - stamp) * normalized)
 }
 
 onMount(() => {
-  screenHeight = window.screen.height
+  resized()
   mounted = true
 })
 </script>
 
-<svelte:window bind:scrollY />
+<svelte:window bind:scrollY on:resize={resized} />
 
 <div
   class="wrap {classes}"
