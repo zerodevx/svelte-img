@@ -13,8 +13,8 @@ let loaded = false
 let inview = false
 
 $: if (src.length) {
-  const { base64 } = src.find((i) => i.base64)
-  background = base64 ? `url('${base64}') no-repeat center/cover` : undefined
+  const { base64 } = src.find((i) => i.base64) || {}
+  background = base64 && `url('${base64}') no-repeat center/cover`
   sources = src.filter((i) => !i.base64)
 }
 
