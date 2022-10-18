@@ -28,7 +28,7 @@ function main(overrides = {}) {
         const lqip = idx > -1 ? parseInt(e.splice(idx, 1)[0][1][0]) : 16
         const merge = new Map()
         for (const [key, val] of e) merge.set(key, val)
-        return [...resolveConfigs([...merge], f), { lqip }]
+        return [...resolveConfigs([...merge], f), ...(lqip ? [{ lqip }] : [])]
       }
       return resolveConfigs(e, f)
     },
