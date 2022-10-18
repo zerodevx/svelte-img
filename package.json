@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "High-performance responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@playwright/test": "^1.27.1",
     "@sveltejs/adapter-static": "1.0.0-next.44",
-    "@sveltejs/kit": "1.0.0-next.516",
+    "@sveltejs/kit": "1.0.0-next.517",
     "@sveltejs/package": "1.0.0-next.5",
     "@tailwindcss/typography": "^0.5.7",
     "autoprefixer": "^10.4.12",
