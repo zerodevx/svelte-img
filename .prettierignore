@@ -6,8 +6,6 @@ node_modules
 .env
 .env.*
 !.env.example
-/temp
-LICENSE
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
