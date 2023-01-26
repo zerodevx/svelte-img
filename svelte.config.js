@@ -9,8 +9,7 @@ const config = {
     adapter: adapter(),
     paths: {
       base: dev ? '' : '/svelte-img'
-    },
-    trailingSlash: dev ? 'never' : 'always'
+    }
   },
   preprocess: [
     preprocess({
