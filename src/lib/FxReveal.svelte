@@ -3,7 +3,9 @@ import Img from './SvelteImg.svelte'
 import observe from './_observe.js'
 import { onMount } from 'svelte'
 
+/** @type {Object[]} imagetools import */
 export let src = []
+/** @type {Object|undefined} bindable reference to this component */
 export let ref = undefined
 
 let sources = []

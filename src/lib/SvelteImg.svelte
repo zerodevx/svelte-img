@@ -1,10 +1,17 @@
 <script>
+/** @type {Object[]} imagetools import */
 export let src = []
+/** @type {string|undefined} img tag `sizes` attr */
 export let sizes = undefined
+/** @type {number|undefined} image width override */
 export let width = undefined
+/** @type {number|undefined} image height override */
 export let height = undefined
+/** @type {'lazy'|'eager'} img tag `loading` attr */
 export let loading = 'lazy'
+/** @type {'async'|'auto'|'sync'} */
 export let decoding = 'async'
+/** @type {Object|undefined} bindable reference to this component */
 export let ref = undefined
 
 const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']
