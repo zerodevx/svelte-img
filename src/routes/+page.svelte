@@ -1,19 +1,19 @@
 <script>
-import cat01 from './cat01.jpg?run&width=480;1024;1920;2560&height=1024'
+import cat01 from './cat01.jpg?width=480;1024;1920;2560&height=1024&run'
 import cat02 from './cat02.jpg?run'
 import cat03 from './cat03.jpg?run'
 import cat04 from './cat04.jpg?run'
-import cat05 from './cat05.jpg?run&width=640&height=640&fit=cover'
-import cat06 from './cat06.jpg?run&width=640&height=640&fit=cover'
-import cat07 from './cat07.jpg?run&width=640&height=640&fit=cover'
-import cat08 from './cat08.jpg?run&width=640&height=640&fit=cover'
-import cat09 from './cat09.jpg?run&width=640&height=640&fit=cover'
-import cat10 from './cat10.jpg?run&width=640&height=640&fit=cover'
-import cat11 from './cat11.jpg?run&width=640&height=640&fit=cover'
-import cat12 from './cat12.jpg?run&width=640&height=640&fit=cover'
-import cat13 from './cat13.jpg?run&width=640&height=640&fit=cover'
-import cat14 from './cat14.jpg?run&width=640&height=640&fit=cover'
-import cat15 from './cat15.jpg?run&width=640&height=640&fit=cover'
+import cat05 from './cat05.jpg?width=640&height=640&fit=cover&run'
+import cat06 from './cat06.jpg?width=640&height=640&fit=cover&run'
+import cat07 from './cat07.jpg?width=640&height=640&fit=cover&run'
+import cat08 from './cat08.jpg?width=640&height=640&fit=cover&run'
+import cat09 from './cat09.jpg?width=640&height=640&fit=cover&run'
+import cat10 from './cat10.jpg?width=640&height=640&fit=cover&run'
+import cat11 from './cat11.jpg?width=640&height=640&fit=cover&run'
+import cat12 from './cat12.jpg?width=640&height=640&fit=cover&run'
+import cat13 from './cat13.jpg?width=640&height=640&fit=cover&run'
+import cat14 from './cat14.jpg?width=640&height=640&fit=cover&run'
+import cat15 from './cat15.jpg?width=640&height=640&fit=cover&run'
 import Img, { FxReveal, FxParallax } from '$lib/index.js'
 
 const dynamic = [cat05, cat06, cat07, cat08, cat09, cat10, cat11, cat12, cat13, cat14, cat15]
@@ -71,8 +71,8 @@ let selected = 0
   <ol start="3">
     <li>
       <p>
-        Or add parallax special effects to images. All images should still work without Javascript.
-        Try disabling JS and refreshing the page. Also check out the lighthouse score.
+        Or add parallax special effects to images. All images should still appear even without
+        Javascript. Try disabling JS and refreshing the page. Also check out the lighthouse score.
       </p>
     </li>
   </ol>
