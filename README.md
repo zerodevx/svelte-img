@@ -113,7 +113,7 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 ```html
 <script>
 // We override defaults to generate 5 variants instead - `avif/jpg` formats at `768/1024` + LQIP
-import src from '$lib/a/cat.jpg?run&width=640;1024&format=avif;jpg'
+import src from '$lib/a/cat.jpg?width=640;1024&format=avif;jpg&run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -124,12 +124,12 @@ import Img from '@zerodevx/svelte-img'
 
 By default, LQIPs are 16px in width and set to `cover` the full image dimension. Increase for a
 higher quality LQIP at the expense of a larger `base64`, or set to 1px for a dominant single-colour
-background. To disable LQIP completely, set `?run&lqip=0`.
+background. To disable LQIP completely, set `?lqip=0&run`.
 
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run&lqip=1'
+import src from '$lib/a/cat.jpg?lqip=1&run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -146,7 +146,7 @@ of transformation directives offered by
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run&height=600&fit=cover&normalize'
+import src from '$lib/a/cat.jpg?width=600&height=600&fit=cover&normalize&run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -256,12 +256,24 @@ import { FxParallax as Img } from '@zerodevx/svelte-img'
 <Img class="w-full h-64" factor="0.5" {src} alt="cat" />
 ```
 
-## To do
+## Development
 
-- [ ] Add typings
-- [ ] Add tests
-- [ ] Improve docs
-- [ ] Improve demo
+Library is packaged via [SvelteKit](https://kit.svelte.dev/docs/packaging). Standard Github
+[contribution workflow](https://docs.github.com/en/get-started/quickstart/contributing-to-projects)
+applies.
+
+### Tests
+
+End-to-end testing via [Playwright](https://github.com/microsoft/playwright). To run tests
+headlessly:
+
+```
+$ npm run test
+```
+
+## Changelog
+
+Please refer to the [releases](https://github.com/zerodevx/svelte-img/releases) page.
 
 ## License
 
