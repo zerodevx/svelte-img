@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { imagetools } from 'vite-imagetools'
 import { resize, format, setMetadata, metadataFormat, resolveConfigs } from 'imagetools-core'
 
