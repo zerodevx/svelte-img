@@ -9,3 +9,5 @@ declare namespace App {
   // interface PrivateEnv {}
   // interface PublicEnv {}
 }
+
+export {}
