@@ -34,6 +34,31 @@ const config = {
 export default config
 ```
 
+Optionally, to silent typescript
+[warnings](https://github.com/JonasKruckenberg/imagetools/issues/160) on image imports, create a new
+file at `src/ambient.d.ts`:
+
+```js
+// Squelch warnings of all imports from your image assets dir
+declare module '$lib/assets/*' {
+  const image: Record<string, any>
+  export default image
+}
+```
+
+### Under the hood
+
+Local image transformations are delegated to the excellent
+[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) with a custom `?run` directive.
+This preset generates optimized images with sensible defaults, including a `base64` low-quality
+image placeholder.
+
+Invoke the preset with the `?run` query param:
+
+```js
+import 'path/to/asset?run`
+```
+
 ## Usage
 
 Use anywhere in your Svelte app:
@@ -79,10 +104,8 @@ The image component renders into:
 
 #### Change default widths/formats
 
-Local image manipulation is delegated to the excellent
-[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) with a custom `?run` directive. By
-default, this generates 10 variants of every image - `avif/webp/jpg` formats at `480/1024/1920`
-widths; and a `16px webp/base64` low-quality image placeholder (LQIP).
+By default, `svelte-img` generates 10 variants of an original full-sized image - in `avif/webp/jpg`
+formats at `480/1024/1920` widths; and a `16px webp/base64` low-quality image placeholder (LQIP).
 
 To change this globally, edit your `vite.config.js`:
 
@@ -113,7 +136,7 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 ```html
 <script>
 // We override defaults to generate 5 variants instead - `avif/jpg` formats at `768/1024` + LQIP
-import src from '$lib/a/cat.jpg?width=640;1024&format=avif;jpg&run'
+import src from '$lib/a/cat.jpg?run&width=640;1024&format=avif;jpg'
 import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -124,12 +147,12 @@ import Img from '@zerodevx/svelte-img'
 
 By default, LQIPs are 16px in width and set to `cover` the full image dimension. Increase for a
 higher quality LQIP at the expense of a larger `base64`, or set to 1px for a dominant single-colour
-background. To disable LQIP completely, set `?lqip=0&run`.
+background. To disable LQIP completely, set `?run&lqip=0`.
 
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?lqip=1&run'
+import src from '$lib/a/cat.jpg?run&lqip=1'
 import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -146,11 +169,27 @@ of transformation directives offered by
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?width=600&height=600&fit=cover&normalize&run'
+import src from '$lib/a/cat.jpg?run&width=600&height=600&fit=cover&normalize'
 import Img from '@zerodevx/svelte-img'
 </script>
 
 <Img {src} alt="cat" />
+```
+
+#### Lazy loading
+
+`svelte-img` utilises the browser's native lazy loading capability by setting the `loading="lazy"`
+attribute on the rendered `<img>` tag by default. This is supported by
+[most modern browsers](https://caniuse.com/loading-lazy-attr). To load an image eagerly instead:
+
+<!-- prettier-ignore -->
+```html
+<script>
+import src from '$lib/a/cat.jpg?run'
+import Img from '@zerodevx/svelte-img'
+</script>
+
+<Img {src} alt="cat" loading="eager" />
 ```
 
 #### Remote images from an API
