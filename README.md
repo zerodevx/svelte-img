@@ -34,7 +34,7 @@ const config = {
 export default config
 ```
 
-Optionally, to silent typescript
+Optionally, to silence typescript
 [warnings](https://github.com/JonasKruckenberg/imagetools/issues/160) on image imports, create a new
 file at `src/ambient.d.ts`:
 
@@ -56,7 +56,7 @@ image placeholder.
 Invoke the preset with the `?run` query param:
 
 ```js
-import 'path/to/asset?run`
+import imageMeta from 'path/to/asset?run`
 ```
 
 ## Usage
