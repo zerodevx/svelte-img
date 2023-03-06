@@ -11,7 +11,7 @@ export let height = undefined
 export let loading = 'lazy'
 /** @type {'async'|'auto'|'sync'} */
 export let decoding = 'async'
-/** @type {Object|undefined} bindable reference to this component */
+/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
 export let ref = undefined
 
 const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']

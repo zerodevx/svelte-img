@@ -1,5 +1,7 @@
+/** @type {IntersectionObserver} */
 let observer
 
+/** @param {Element} node */
 export default function (node) {
   observer =
     observer ||

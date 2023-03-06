@@ -5,7 +5,7 @@ import { onMount } from 'svelte'
 
 /** @type {Object[]} imagetools import */
 export let src = []
-/** @type {Object|undefined} bindable reference to this component */
+/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
 export let ref = undefined
 
 let sources = []

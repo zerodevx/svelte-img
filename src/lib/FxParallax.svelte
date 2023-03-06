@@ -12,7 +12,7 @@ export { classes as class }
  * - value of 0 effectively makes the element scroll fixed with the page
  */
 export let factor = 0.75
-/** @type {Object|undefined} bindable reference to this component */
+/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
 export let ref = undefined
 
 let mounted = false
