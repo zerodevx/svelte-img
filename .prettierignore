@@ -2,10 +2,11 @@
 node_modules
 /build
 /.svelte-kit
-/package
+/dist
 .env
 .env.*
 !.env.example
+/temp
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
