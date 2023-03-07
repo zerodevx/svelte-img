@@ -95,7 +95,7 @@ let selected = 0
 <div class="max-w-7xl mx-auto px-4 mb-96">
   <div class="flex flex-col md:flex-row">
     <div class="flex justify-center">
-      <div class="w-96 h-96 md:w-128 md:h-128">
+      <div class="w-80 h-80 md:w-128 md:h-128">
         <Img class="w-full h-full not-prose" src={dynamic[selected]} alt="cat" />
       </div>
     </div>
