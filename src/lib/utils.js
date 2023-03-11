@@ -2,7 +2,7 @@
 let observer
 
 /** @param {Element} node */
-export default function (node) {
+function observe(node) {
   observer =
     observer ||
     new IntersectionObserver((entries) => {
@@ -18,3 +18,5 @@ export default function (node) {
     }
   }
 }
+
+export { observe }

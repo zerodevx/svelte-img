@@ -1,6 +1,6 @@
 <script>
 import Img from './SvelteImg.svelte'
-import observe from './_observe.js'
+import { observe } from './utils.js'
 import { onMount } from 'svelte'
 
 let classes = ''
