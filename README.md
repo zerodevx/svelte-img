@@ -39,10 +39,10 @@ Optionally, to silence typescript
 file at `src/ambient.d.ts`:
 
 ```js
-// Squelch warnings of all imports from your image assets dir
+// Squelch warnings of image imports from your assets dir
 declare module '$lib/assets/*' {
-  const image: Record<string, any>[]
-  export default image
+  const meta: Object[]
+  export default meta
 }
 ```
 
