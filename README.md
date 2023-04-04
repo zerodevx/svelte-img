@@ -211,7 +211,7 @@ const src = [
 ]
 </script>
 
-<Img {src} alt="hello" />
+<Img {src} alt="cat" />
 ```
 
 The order doesn't matter; `svelte-img` internally sorts out the source priority based on:
@@ -233,10 +233,10 @@ import src from '$lib/a/cat.jpg?run'
 import Img from '@zerodevx/svelte-img'
 </script>
 
-<Img {src} alt="cat" />
+<Img class="better-blur" {src} alt="cat" />
 
 <style>
-:global(img)::after {
+:global(img.better-blur)::after {
   content: '';
   position: absolute;
   inset: 0;
