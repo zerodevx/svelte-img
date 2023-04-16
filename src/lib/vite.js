@@ -18,7 +18,7 @@ function lqip(cfg, ctx) {
 
 function main(overrides = {}) {
   return imagetools({
-    defaultDirectives: () => new URLSearchParams('width=480;1024;1920&format=avif;webp;jpg'),
+    defaultDirectives: (url) => url.searchParams.has('run') ? new URLSearchParams('width=480;1024;1920&format=avif;webp;jpg') : new URLSearchParams(''),
     extendTransforms: (builtins) => [...builtins, lqip],
     extendOutputFormats: (builtinOutputFormats) => ({
       ...builtinOutputFormats,

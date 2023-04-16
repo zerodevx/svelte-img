@@ -2,13 +2,15 @@
 import testBasic from '../cat01.jpg?run'
 import testNoLqip from '../cat01.jpg?lqip=0&run'
 import testWidthOverride from '../cat01.jpg?width=480;1024&run'
+import testDefault from '../cat01.jpg'
 
 const s = (obj = {}) => JSON.stringify(obj)
 
 const tests = [
   { id: 'basic', name: 'default variants are generated', view: s(testBasic) },
   { id: 'nolqip', name: 'no lqip', view: s(testNoLqip) },
-  { id: 'width', name: 'width override', view: s(testWidthOverride) }
+  { id: 'width', name: 'width override', view: s(testWidthOverride) },
+  { id: 'default', name: 'returns a path by default', view: s(testDefault) }
 ]
 </script>
 
