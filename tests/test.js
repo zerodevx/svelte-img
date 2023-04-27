@@ -28,3 +28,9 @@ test('width override', async ({ page }) => {
   expect(data.filter((i) => i.width === 480).length).toBe(3)
   expect(data.filter((i) => i.width === 1024).length).toBe(3)
 })
+
+test('returns a path by default', async ({ page }) => {
+  await page.goto('/test')
+  const data = JSON.parse((await page.getByTestId('default').textContent()) || '')
+  expect(data).toBe(`/src/routes/cat01.jpg`)
+})
