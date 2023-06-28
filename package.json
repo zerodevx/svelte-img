@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "High-performance responsive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {
@@ -10,9 +10,9 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "format": "prettier --write --plugin-search-dir=. .",
-    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint . && npm run check",
     "test": "playwright test",
-    "package": "svelte-kit sync && svelte-package && npx publint",
+    "package": "npm run lint && svelte-package && npx publint",
     "deploy": "npm run build && npx gh-pages -d build -t -f"
   },
   "dependencies": {
@@ -20,7 +20,7 @@
     "vite-imagetools": "4.0.18"
   },
   "peerDependencies": {
-    "svelte": "^3.55.1"
+    "svelte": "^3.55.1 || ^4.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.31.2",
