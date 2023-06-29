@@ -54,18 +54,18 @@ $: if (src.length) {
     {/each}
     <!-- svelte-ignore a11y-missing-attribute -->
     <img
-      src={image.src}
-      srcset={image.srcset}
+      {loading}
+      {decoding}
       {sizes}
       width={width || image.width || undefined}
       height={height || image.height || undefined}
-      {loading}
-      {decoding}
       style:background={image.lqip}
       bind:this={ref}
       on:click
       on:load
       {...$$restProps}
+      srcset={image.srcset}
+      src={image.src}
     />
   </picture>
 {/if}
