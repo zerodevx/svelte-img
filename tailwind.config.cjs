@@ -7,12 +7,6 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['Inter Variable', ...dt.fontFamily.sans]
-      },
-      width: {
-        128: '32rem'
-      },
-      height: {
-        128: '32rem'
       }
     }
   },
