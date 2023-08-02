@@ -48,7 +48,7 @@ let selected = 0
   </ol>
 </div>
 <div class="max-w-7xl mx-auto px-4 mb-12">
-  <Img class="w-full h-128 object-cover" src={cat02} alt="cat" />
+  <Img class="w-full h-[32rem] object-cover" src={cat02} alt="cat" />
 </div>
 
 <div class="max-w-3xl mx-auto prose px-4">
@@ -64,7 +64,7 @@ let selected = 0
   </ol>
 </div>
 <div class="max-w-7xl mx-auto px-4 mb-12">
-  <FxReveal class="w-full h-128 object-cover" src={cat03} alt="cat" />
+  <FxReveal class="w-full h-[32rem] object-cover" src={cat03} alt="cat" />
 </div>
 
 <div class="max-w-3xl mx-auto prose px-4">
@@ -78,7 +78,7 @@ let selected = 0
   </ol>
 </div>
 <div class="max-w-7xl mx-auto px-4 mb-12">
-  <FxParallax class="w-full h-128" src={cat04} alt="cat" />
+  <FxParallax class="w-full h-[32rem]" src={cat04} alt="cat" />
 </div>
 
 <div class="max-w-3xl mx-auto prose px-4">
@@ -95,7 +95,7 @@ let selected = 0
 <div class="max-w-7xl mx-auto px-4 mb-96">
   <div class="flex flex-col md:flex-row">
     <div class="flex justify-center">
-      <div class="w-80 h-80 md:w-128 md:h-128">
+      <div class="w-80 h-80 md:w-[32rem] md:h-[32rem]">
         <Img class="w-full h-full not-prose" src={dynamic[selected]} alt="cat" />
       </div>
     </div>
