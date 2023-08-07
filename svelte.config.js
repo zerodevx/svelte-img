@@ -8,9 +8,7 @@ const dev = process.env.NODE_ENV === 'development'
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
-    adapter: adapter({
-      fallback: '404.html'
-    }),
+    adapter: adapter(),
     paths: {
       base: dev ? '' : '/svelte-img'
     },
