@@ -10,7 +10,24 @@ const config = {
       }
     }
   },
-  plugins: [addDynamicIconSelectors(), require('@tailwindcss/typography')]
+  plugins: [addDynamicIconSelectors(), require('@tailwindcss/typography'), require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require('daisyui/src/theming/themes')['[data-theme=light]'],
+          primary: '#1C75BC',
+          'primary-content': 'white'
+        }
+      },
+      {
+        dark: {
+          ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
+          primary: '#1C75BC'
+        }
+      }
+    ]
+  }
 }
 
 module.exports = config
