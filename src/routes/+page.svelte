@@ -24,22 +24,22 @@ const images = Object.entries(modules).map((i) => i[1])
 let selected = 0
 </script>
 
-<div class="relative mb-16 test-basic">
-  <Img class="w-full h-[32rem] object-cover" src={hero} alt="cat" loading="eager" />
+<div class="test-basic relative mb-16">
+  <Img class="h-[32rem] w-full object-cover" src={hero} alt="cat" loading="eager" />
   <div class="absolute inset-0 flex flex-col justify-center">
-    <div class="prose prose-h1:text-white prose-p:text-white mx-auto text-center px-4">
+    <div class="prose mx-auto px-4 text-center prose-h1:text-white prose-p:text-white">
       <h1>svelte-img</h1>
-      <div class="badge badge-neutral font-mono text-xs ml-2">v{version}</div>
+      <div class="badge badge-neutral ml-2 font-mono text-xs">v{version}</div>
       <p>High-performance responsive/progressive images for SvelteKit.</p>
       <a class="btn btn-primary" href="https://github.com/zerodevx/svelte-img">
-        <span class="w-6 h-6 icon-[mdi--github]" />
+        <span class="icon-[mdi--github] h-6 w-6" />
         View Github Repo
       </a>
     </div>
   </div>
 </div>
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>
     Render the bare minimum, minimally invasive, LQIP-included HTML code to represent responsive
     images, served in multiple widths and next-gen formats.
@@ -74,35 +74,35 @@ export default defineConfig({
   </blockquote>
 </div>
 
-<Img class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover mb-16" src={i1} alt="cat" />
+<Img class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] object-cover" src={i1} alt="cat" />
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>
     The LQIP is usually a 16px <code>webp;base64</code> data URI at about ≈150 bytes.
   </blockquote>
 </div>
 
 <img
-  class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover mb-16"
+  class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] object-cover"
   src="data:image/webp;base64,{i1.img.lqip}"
   alt="cat lqip"
 />
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>
     Though not recommended, you can apply a Gaussian blur <code>backdrop-filter</code>.
   </blockquote>
 </div>
 
-<div class="w-full h-[32rem] max-w-[1920px] mx-auto overflow-hidden mb-16">
+<div class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] overflow-hidden">
   <img
-    class="w-full h-full object-cover blur scale-105"
+    class="h-full w-full scale-105 object-cover blur"
     src="data:image/webp;base64,{i1.img.lqip}"
     alt="cat lqip"
   />
 </div>
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>
     Not much difference, is there? The next image has a dominant colour placeholder instead.
   </blockquote>
@@ -110,45 +110,45 @@ export default defineConfig({
 
 <div class="test-run-param">
   <Img
-    class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover mb-16 test-1px"
+    class="test-1px mx-auto mb-16 h-[32rem] w-full max-w-[1920px] object-cover"
     src={i2}
     alt="cat"
   />
 </div>
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>Which looks like this.</blockquote>
 </div>
 
-<div class="w-full h-[32rem] max-w-[1920px] mx-auto mb-16" style="background:{i2.img.lqip}" />
+<div class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px]" style="background:{i2.img.lqip}" />
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>
     You can also reveal images with <code>fade-in/zoom</code> special effects.
   </blockquote>
 </div>
 
 <div class="mb-16">
-  <FxReveal class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover" src={i3} alt="cat" />
+  <FxReveal class="mx-auto h-[32rem] w-full max-w-[1920px] object-cover" src={i3} alt="cat" />
 </div>
 
 <div class="mb-16">
-  <FxReveal class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover" src={i4} alt="cat" />
+  <FxReveal class="mx-auto h-[32rem] w-full max-w-[1920px] object-cover" src={i4} alt="cat" />
 </div>
 
 <div class="mb-16">
-  <FxReveal class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover" src={i5} alt="cat" />
+  <FxReveal class="mx-auto h-[32rem] w-full max-w-[1920px] object-cover" src={i5} alt="cat" />
 </div>
 
-<div class="prose mx-auto px-4 mb-8">
+<div class="prose mx-auto mb-8 px-4">
   <blockquote>Or even apply parallax scrolling special effects.</blockquote>
 </div>
 
-<div class="w-full max-w-[1920px] mx-auto mb-16">
-  <FxParallax class="w-full h-[40rem]" src={pllx} alt="cat" />
+<div class="mx-auto mb-16 w-full max-w-[1920px]">
+  <FxParallax class="h-[40rem] w-full" src={pllx} alt="cat" />
 </div>
 
-<div class="prose mx-auto px-4 mb-16">
+<div class="prose mx-auto mb-16 px-4">
   <blockquote>
     The <code>svelte-img</code> component tries, as much as possible, to be a drop-in replacement
     for the native HTML
@@ -172,15 +172,15 @@ const images = Object.entries(modules).map((i) => i[1])
     ></pre>
 </div>
 
-<div class="relative w-full flex flex-col lg:flex-row lg:justify-center items-center mb-16">
-  <div class="w-full max-w-sm aspect-square shadow-md overflow-hidden sticky lg:relative top-0">
-    <FxReveal class="w-full h-full" src={images[selected]} alt="cat" />
+<div class="relative mb-16 flex w-full flex-col items-center lg:flex-row lg:justify-center">
+  <div class="sticky top-0 aspect-square w-full max-w-sm overflow-hidden shadow-md lg:relative">
+    <FxReveal class="h-full w-full" src={images[selected]} alt="cat" />
   </div>
-  <div class="w-full max-w-xl flex flex-wrap justify-center mt-6 lg:mt-0">
+  <div class="mt-6 flex w-full max-w-xl flex-wrap justify-center lg:mt-0">
     {#each images as src, i}
-      <div class="w-28 aspect-square m-3">
+      <div class="m-3 aspect-square w-28">
         <Img
-          class="w-full h-full border-4 cursor-pointer {selected === i
+          class="h-full w-full cursor-pointer border-4 {selected === i
             ? 'border-primary'
             : 'border-base-200'}"
           {src}
@@ -193,16 +193,16 @@ const images = Object.entries(modules).map((i) => i[1])
 </div>
 
 <!-- Start tests -->
-<div class="hidden test-single">
+<div class="test-single hidden">
   <Img src={testSingle} alt="test" />
 </div>
-<div class="hidden test-fallback">{JSON.stringify(testFallback)}</div>
+<div class="test-fallback hidden">{JSON.stringify(testFallback)}</div>
 <!-- End tests -->
 
 <footer
-  class="w-full h-96 bg-neutral text-neutral-content flex flex-row items-center justify-center"
+  class="flex h-96 w-full flex-row items-center justify-center bg-neutral text-neutral-content"
 >
-  <span class="icon-[mdi--email] w-6 h-6 mr-2" />
+  <span class="icon-[mdi--email] mr-2 h-6 w-6" />
   <a class="link" href="mailto:jason@zerodevx.com">jason@zerodevx.com</a>
 </footer>
 
