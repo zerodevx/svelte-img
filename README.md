@@ -1,16 +1,20 @@
 # svelte-img
 
-> High-performance responsive images for SvelteKit.
+> High-performance responsive/progressive images for SvelteKit.
 
 Automatically transform local images into multiple widths and next-gen formats, then render a
-minimally invasive HTML representation into your SvelteKit project.
+minimally invasive LQIP-included HTML representation into your SvelteKit project.
 
 Includes special effects:
 
 - [x] Fade-in on image reveal
 - [x] Parallax vertical scroll effect
 
-Demo: https://zerodevx.github.io/svelte-img/
+Hope you like cats. Demo: https://zerodevx.github.io/svelte-img/
+
+> [!WARNING]  
+> These are the `v2` docs; there are **breaking changes**! Read up on how to
+> [migrate](https://github.com/zerodevx/svelte-img/releases/tag/v2.0.0).
 
 ## Install
 
@@ -23,15 +27,13 @@ $ npm i -D @zerodevx/svelte-img
 Add `imagetools` plugin into your `vite.config.js`:
 
 ```js
+import { defineConfig } from 'vite'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { imagetools } from '@zerodevx/svelte-img/vite'
 
-/** @type {import('vite').UserConfig} */
-const config = {
+export default defineConfig({
   plugins: [sveltekit(), imagetools()]
-}
-
-export default config
+})
 ```
 
 Optionally, to silence typescript
@@ -41,7 +43,7 @@ file at `src/ambient.d.ts`:
 ```js
 // Squelch warnings of image imports from your assets dir
 declare module '$lib/assets/*' {
-  const meta: Object[]
+  var meta
   export default meta
 }
 ```
@@ -49,14 +51,14 @@ declare module '$lib/assets/*' {
 ### Under the hood
 
 Local image transformations are delegated to the excellent
-[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) with a custom `?run` directive.
+[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) with a custom `run` directive.
 This preset generates optimized images with sensible defaults, including a `base64` low-quality
 image placeholder.
 
-Invoke the preset with the `?run` query param:
+Invoke the preset with the `?as=run` query param:
 
 ```js
-import imageMeta from 'path/to/asset?run`
+import imageMeta from 'path/to/asset?as=run'
 ```
 
 ## Usage
@@ -66,12 +68,12 @@ Use anywhere in your Svelte app:
 <!-- prettier-ignore -->
 ```html
 <script>
-// Import original full-sized image with `?run` query param.
-import cat from '$lib/assets/cat.jpg?run'
-import Img from '@zerodevx/svelte-img'
+  // Import original full-sized image with `?as=run` query param
+  import cat from '$lib/assets/cat.jpg?as=run'
+  import Img from '@zerodevx/svelte-img'
 </script>
 
-<Img class="cool cats" src={cat} alt="Cute cat" />
+<Img class="cool kitty" src="{cat}" alt="Very meow" />
 ```
 
 The image component renders into:
@@ -86,16 +88,19 @@ The image component renders into:
     type="image/webp"
     srcset="path/to/webp-480 480w, path/to/webp-1024 1024w, path/to/webp-1920 1920w"
   />
+  <source
+    type="image/jpeg"
+    srcset="path/to/jpeg-480 480w, path/to/jpeg-1024 1024w, path/to/jpeg-1920 1920w"
+  />
   <img
-    class="cool cats"
-    src="path/to/jpg-1920"
-    srcset="path/to/jpg-480 480w, path/to/jpg-1024 1024w, path/to/jpg-1920 1920w"
+    class="cool kitty"
     width="1920"
     height="1080"
     loading="lazy"
     decoding="async"
-    style='background: url("data:image/webp;base64,XXX") no-repeat center/cover'
-    alt="Cute cat"
+    style="background: url(data:image/webp;base64,XXX) no-repeat center/cover"
+    alt="Very meow"
+    src="path/to/jpeg-1920"
   />
 </picture>
 ```
@@ -104,29 +109,33 @@ The image component renders into:
 
 #### Change default widths/formats
 
-By default, `svelte-img` generates 10 variants of an original full-sized image - in `avif/webp/jpg`
-formats at `480/1024/1920` widths; and a `16px webp/base64` low-quality image placeholder (LQIP).
+By default, `svelte-img` generates 9 variants of an original full-sized image - at `480/1024/1920`
+widths in `avif/webp/jpg` formats; and a `16px webp/base64` low-quality image placeholder (LQIP).
 
 To change this globally, edit your `vite.config.js`:
 
 ```js
+import { defineConfig } from 'vite'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { imagetools } from '@zerodevx/svelte-img/vite'
 
-/** @type {import('vite').UserConfig} */
-const config = {
+// By default, directives are 'w=480;1024;1920&format=avif;webp;jpg' (9 variants)
+export default defineConfig({
   plugins: [
     sveltekit(),
     imagetools({
-      // By default, directives are `?width=480;1024;1920&format=avif;webp;jpg`
-      // Now we change it to generate 5 variants instead - `avif/jpg` formats at `640/1280` + LQIP
-      defaultDirectives: () => new URLSearchParams('?width=640;1280&format=avif;jpg')
+      // Now we change it to generate 4 variants instead: 640/1280w in webp/jpg
+      runDefaultDirectives: new URLSearchParams('w=640;1280&format=webp;jpg')
     })
   ]
-}
-
-export default config
+})
 ```
+
+> [!IMPORTANT]  
+> This package works alongside standard `vite-imagetools`; the `?as=run` preset takes default
+> directives from `runDefaultDirectives`! Without using the preset, behaviour falls back to standard
+> imagetools, which takes default directives from `defaultDirectives` as usual, so both can
+> co-exist.
 
 #### On a per-image basis
 
@@ -135,29 +144,74 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 <!-- prettier-ignore -->
 ```html
 <script>
-// We override defaults to generate 5 variants instead - `avif/jpg` formats at `768/1024` + LQIP
-import src from '$lib/a/cat.jpg?run&width=640;1024&format=avif;jpg'
-import Img from '@zerodevx/svelte-img'
+  // We override defaults to generate 4 variants: 720/1560w in webp/jpg
+  import src from '$lib/a/cat.jpg?w=720;1560&format=webp;jpg&as=run'
+  import Img from '@zerodevx/svelte-img'
 </script>
 
 <Img {src} alt="cat" />
 ```
 
-#### Change LQIP width
+> [!IMPORTANT]  
+> Order of `format` is important - the _last_ format is used as the fallback image of the HTML
+> `<img>` tag.
 
-By default, LQIPs are 16px in width and set to `cover` the full image dimension. Increase for a
-higher quality LQIP at the expense of a larger `base64`, or set to 1px for a dominant single-colour
-background. To disable LQIP completely, set `?run&lqip=0`.
+If only **one** variant is generated, the `<picture>` tag will not be rendered since it's redundant.
 
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run&lqip=1'
-import Img from '@zerodevx/svelte-img'
+  // Generate only 1 variant: 640x640 in png
+  import src from '$lib/a/cat.jpg?w=640&h=640&format=png&as=run:0'
+  import Img from '@zerodevx/svelte-img'
 </script>
 
-<!-- Render dominant colour background -->
 <Img {src} alt="cat" />
+```
+
+Renders into:
+
+```html
+<img
+  width="640"
+  height="640"
+  loading="lazy"
+  decoding="async"
+  style="background: url(data:image/webp;base64,XXX) no-repeat center/cover"
+  alt="cat"
+  src="path/to/png-640"
+/>
+```
+
+#### Change LQIP width
+
+LQIP is controlled by the `run` directive param. Using `?as=run` defaults to `16px` LQIP -
+equivalent to `?as=run:16`. Increase for a higher quality LQIP (eg `?as=run:32` for `32px` LQIP) at
+the expense of a larger inline `base64` (larger HTML size).
+
+To disable LQIP, set `?as=run:0`.
+
+For a dominant single-colour background, set `?as=run:1`.
+
+<!-- prettier-ignore -->
+```html
+<script>
+  import src from '$lib/a/cat.jpg?as=run:1'
+  import Img from '@zerodevx/svelte-img'
+</script>
+
+<!-- Render img with dominant colour background -->
+<Img {src} alt="cat" />
+```
+
+Renders into:
+
+<!-- prettier-ignore -->
+```html
+<picture>
+  <source ... />
+  <img ... style="background: #abcdef" />
+</picture>
 ```
 
 #### Other transformations
@@ -169,11 +223,29 @@ of transformation directives offered by
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run&width=600&height=600&fit=cover&normalize'
-import Img from '@zerodevx/svelte-img'
+  // Generate all 9 variants at fixed height
+  import src from '$lib/a/cat.jpg?h=600&fit=cover&normalize&as=run'
+  import Img from '@zerodevx/svelte-img'
 </script>
 
 <Img {src} alt="cat" />
+```
+
+#### Art direction
+
+Use the `sizes` attribute to define a set of media conditions to hint which image size to select
+when these conditions are true. Read up more on the
+[art direction problem](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+
+<!-- prettier-ignore -->
+```html
+<script>
+  import src from '$lib/a/cat.jpg?w=480;800as=run
+  import Img from '@zerodevx/svelte-img'
+</script>
+
+<!-- If viewport is <=600px, use 480px as breakpoint -->
+<Img {src} alt="cat" sizes="(max-width: 600px) 480px, 800px" />
 ```
 
 #### Lazy loading
@@ -185,40 +257,61 @@ attribute on the rendered `<img>` tag by default. This is supported by
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run'
-import Img from '@zerodevx/svelte-img'
+  import src from '$lib/a/cat.jpg?run'
+  import Img from '@zerodevx/svelte-img'
 </script>
 
 <Img {src} alt="cat" loading="eager" />
 ```
 
+#### Batch loading local images
+
+Use Vite's `import.meta.glob` [feature](https://vitejs.dev/guide/features.html#glob-import).
+
+<!-- prettier-ignore -->
+```html
+<script>
+  import Img from '@zerodevx/svelte-img'
+
+  const modules = import.meta.glob('$lib/a/cats/*.*', {
+    import: 'default',
+    eager: true,
+    query: { w: 640, h: 640, fit: 'cover', as: 'run' }
+  })
+  const images = Object.entries(modules).map((i) => i[1])
+</script>
+
+{#each images as src}
+  <Img {src} alt="cat" />
+{/each}
+```
+
 #### Remote images from an API
 
-Use the `svelte-img` component on its own by passing an array of image objects into `src` like so:
+Use the `svelte-img` component on its own by passing a `src` object, like so:
 
 <!-- prettier-ignore -->
 ```html
 <script>
 import Img from '@zerodevx/svelte-img'
 
-const src = [
-  { format: 'avif', src: 'https://x.com/path/to/avif-480', width: 480, height: 120 },
-  { format: 'webp', src: 'https://x.com//path/to/webp-480', width: 480, height: 120 },
-  { format: 'jpg', src: 'https://x.com//path/to/jpg-480', width: 480, height: 120 },
-  { format: 'avif', src: 'https://x.com//path/to/avif-1024', width: 1024, height: 256 },
-  ... // all other variants
-  { base64: 'data:image/webp;base64,XXX' } // an optional LQIP with `base64` key
-]
+const src = {
+  img: { src: 'path/to/img', w: 1920, h: 1080 },
+  sources: {
+    // Order is important; last format is fallback img
+    webp: [
+      { src: 'path/to/img', w: 1920 },
+      { src: 'path/to/img', w: 1024 }
+    ],
+    jpeg: [
+      { src: 'path/to/img', w: 1920 },
+      { src: 'path/to/img', w: 1024 }
+    ]
+  }
+}
 </script>
 
 <Img {src} alt="cat" />
-```
-
-The order doesn't matter; `svelte-img` internally sorts out the source priority based on:
-
-```js
-// Highest to lowest
-const priority = ['heic', 'heif', 'avif', 'webp', 'jpeg', 'jpg', 'png', 'gif', 'tiff']
 ```
 
 #### Blurred image placeholders
@@ -229,20 +322,25 @@ for me, but you can apply your own using CSS.
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run'
-import Img from '@zerodevx/svelte-img'
+  import src from '$lib/a/cat.jpg?run'
+  import Img from '@zerodevx/svelte-img'
+
+  let loaded
 </script>
 
-<Img class="better-blur" {src} alt="cat" />
+<Img class="better-blur" class={loaded} on:load={() => (loaded = true)} {src} alt="cat" />
 
 <style>
-:global(img.better-blur)::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(20px);
-  pointer-events: none;    
-}
+  :global(img.better-blur)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(20px);
+    pointer-events: none;    
+  }
+  :global(img.better-blur.loaded)::after {
+    backdrop-filter: none;
+  }
 </style>
 ```
 
@@ -250,27 +348,28 @@ import Img from '@zerodevx/svelte-img'
 
 #### Fade-in on reveal
 
-Reveal images with a fade-in effect (aka medium.com) when they are loaded _and_ in the viewport.
+Reveal images with a fade-in/zoom effect (aka medium.com) when they are loaded **and** in the
+viewport.
 
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run'
-import { FxReveal as Img } from '@zerodevx/svelte-img'
+  import src from '$lib/a/cat.jpg?run'
+  import { FxReveal as Img } from '@zerodevx/svelte-img'
 </script>
 
 <Img class="my-img" {src} alt="cat" />
 
 <style>
-:global(.my-img) {
-  width: 640px;
-  height: 480px;
-  ...
-  /* These CSS vars are exposed */
-  --reveal-scale: 1.03;
-  --reveal-opacity-duration: 1s;
-  --reveal-transform-duration: 0.6s;
-}
+  :global(.my-img) {
+    width: 640px;
+    height: 480px;
+    
+    /* These CSS vars (shown with their default vals) are exposed */
+    --reveal-transform: scale(1.05);
+    --reveal-transition: opacity 1s linear, transform 0.75s ease-out;
+    --reveal-filter: blur(20px);
+  }
 </style>
 ```
 
@@ -288,11 +387,18 @@ The default factor is `0.75`.
 <!-- prettier-ignore -->
 ```html
 <script>
-import src from '$lib/a/cat.jpg?run'
-import { FxParallax as Img } from '@zerodevx/svelte-img'
+  import src from '$lib/a/cat.jpg?run'
+  import { FxParallax as Img } from '@zerodevx/svelte-img'
 </script>
 
-<Img class="w-full h-64" factor="0.5" {src} alt="cat" />
+<Img class="my-img" factor="0.5" {src} alt="cat" />
+
+<style>
+  :global(.my-img) {
+    width: 100%;
+    height: 28rem;
+  }
+</style>
 ```
 
 ## Development
