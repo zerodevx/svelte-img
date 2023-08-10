@@ -107,7 +107,7 @@ The image component renders into:
 
 ## Features
 
-#### Change default widths/formats
+### Change default widths/formats
 
 By default, `svelte-img` generates 9 variants of an original full-sized image - at `480/1024/1920`
 widths in `avif/webp/jpg` formats; and a `16px webp/base64` low-quality image placeholder (LQIP).
@@ -132,12 +132,11 @@ export default defineConfig({
 ```
 
 > [!IMPORTANT]  
-> This package works alongside standard `vite-imagetools`; the `?as=run` preset takes default
-> directives from `runDefaultDirectives`! Without using the preset, behaviour falls back to standard
-> imagetools, which takes default directives from `defaultDirectives` as usual, so both can
-> co-exist.
+> The `?as=run` preset takes default directives from **`runDefaultDirectives`**! When the preset is
+> not used, behaviour falls back to standard `vite-imagetools`, which in turn take defaults from
+> `defaultDirectives` as usual, so both can co-exist.
 
-#### On a per-image basis
+### On a per-image basis
 
 Widths/formats can be applied to a particular image. From your `.svelte` file:
 
@@ -153,16 +152,18 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 ```
 
 > [!IMPORTANT]  
-> Order of `format` is important - the _last_ format is used as the fallback image of the HTML
-> `<img>` tag.
+> Order of `format` is important - the _last_ format is used as the fallback image.
 
-If only **one** variant is generated, the `<picture>` tag will not be rendered since it's redundant.
+If only **one** variant is generated, the `<picture>` tag **won't** be rendered since it's
+redundant.
+
+So:
 
 <!-- prettier-ignore -->
 ```html
 <script>
   // Generate only 1 variant: 640x640 in png
-  import src from '$lib/a/cat.jpg?w=640&h=640&format=png&as=run:0'
+  import src from '$lib/a/cat.jpg?w=640&h=640&format=png&as=run'
   import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -183,15 +184,15 @@ Renders into:
 />
 ```
 
-#### Change LQIP width
+### Change LQIP width
 
 LQIP is controlled by the `run` directive param. Using `?as=run` defaults to `16px` LQIP -
-equivalent to `?as=run:16`. Increase for a higher quality LQIP (eg `?as=run:32` for `32px` LQIP) at
-the expense of a larger inline `base64` (larger HTML size).
+functionally equivalent to `?as=run:16`. Increase for a higher quality LQIP (eg. `?as=run:32` for
+`32px` LQIP) at the expense of a larger inline `base64` (larger HTML size).
 
 To disable LQIP, set `?as=run:0`.
 
-For a dominant single-colour background, set `?as=run:1`.
+For a dominant single-colour background, set `?as=run:1`, like so:
 
 <!-- prettier-ignore -->
 ```html
@@ -214,7 +215,7 @@ Renders into:
 </picture>
 ```
 
-#### Other transformations
+### Other transformations
 
 The full [repertoire](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md)
 of transformation directives offered by
@@ -223,7 +224,7 @@ of transformation directives offered by
 <!-- prettier-ignore -->
 ```html
 <script>
-  // Generate all 9 variants at fixed height
+  // Generate all 9 variants at fixed 600px height
   import src from '$lib/a/cat.jpg?h=600&fit=cover&normalize&as=run'
   import Img from '@zerodevx/svelte-img'
 </script>
@@ -231,10 +232,10 @@ of transformation directives offered by
 <Img {src} alt="cat" />
 ```
 
-#### Art direction
+### Art direction
 
 Use the `sizes` attribute to define a set of media conditions to hint which image size to select
-when these conditions are true. Read up more on the
+when those conditions are true. Read up more on the
 [art direction problem](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 <!-- prettier-ignore -->
@@ -244,11 +245,11 @@ when these conditions are true. Read up more on the
   import Img from '@zerodevx/svelte-img'
 </script>
 
-<!-- If viewport is <=600px, use 480px as breakpoint -->
+<!-- If viewport is <=600px, use 480px as viewport width -->
 <Img {src} alt="cat" sizes="(max-width: 600px) 480px, 800px" />
 ```
 
-#### Lazy loading
+### Lazy loading
 
 `svelte-img` utilises the browser's native lazy loading capability by setting the `loading="lazy"`
 attribute on the rendered `<img>` tag by default. This is supported by
@@ -264,7 +265,7 @@ attribute on the rendered `<img>` tag by default. This is supported by
 <Img {src} alt="cat" loading="eager" />
 ```
 
-#### Batch loading local images
+### Batch loading local images
 
 Use Vite's `import.meta.glob` [feature](https://vitejs.dev/guide/features.html#glob-import).
 
@@ -286,7 +287,7 @@ Use Vite's `import.meta.glob` [feature](https://vitejs.dev/guide/features.html#g
 {/each}
 ```
 
-#### Remote images from an API
+### Remote images from an API
 
 Use the `svelte-img` component on its own by passing a `src` object, like so:
 
@@ -314,7 +315,7 @@ const src = {
 <Img {src} alt="cat" />
 ```
 
-#### Blurred image placeholders
+### Blurred image placeholders
 
 Natively, browsers do already apply _some_ blur when displaying low resolution images. That's enough
 for me, but you can apply your own using CSS.
@@ -346,7 +347,7 @@ for me, but you can apply your own using CSS.
 
 ## Special Effects
 
-#### Fade-in on reveal
+### Fade-in on reveal
 
 Reveal images with a fade-in/zoom effect (aka medium.com) when they are loaded **and** in the
 viewport.
@@ -373,14 +374,14 @@ viewport.
 </style>
 ```
 
-#### Parallax
+### Parallax
 
-Apply a parallax effect to an image, where `factor` is a decimal value between 0 and 1 that controls
-how much slower the element scrolls relative to the scrolling speed:
+Apply a vertical parallax scrolling effect to an image, where `factor` is a decimal value between 0
+and 1, that controls how much slower the element scrolls, relative to the scrolling speed:
 
 - A value closer to 0 is faster, while a value closer to 1 is slower.
 - A value of 1 behaves normally.
-- A value of 0 effectively makes the element scroll fixed with the page.
+- A value of 0 effectively makes the element fixed on the page.
 
 The default factor is `0.75`.
 
