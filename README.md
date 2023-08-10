@@ -152,12 +152,9 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 ```
 
 > [!IMPORTANT]  
-> Order of `format` is important - the _last_ format is used as the fallback image.
+> Order of `format` matters - the _last_ format is used as the fallback image.
 
-If only **one** variant is generated, the `<picture>` tag **won't** be rendered since it's
-redundant.
-
-So:
+If only **one** variant is generated, only the `<img>` tag is rendered, so:
 
 <!-- prettier-ignore -->
 ```html
@@ -186,13 +183,13 @@ Renders into:
 
 ### Change LQIP width
 
-LQIP is controlled by the `run` directive param. Using `?as=run` defaults to `16px` LQIP -
-functionally equivalent to `?as=run:16`. Increase for a higher quality LQIP (eg. `?as=run:32` for
-`32px` LQIP) at the expense of a larger inline `base64` (larger HTML size).
+The `run` directive takes an optional parameter that sets the LQIP's width. Using `?as=run` defaults
+to `16px` LQIP - functionally equivalent to `?as=run:16`. Increase for a higher quality LQIP (eg.
+`?as=run:32` for `32px` LQIP) at the expense of a larger inline `base64` (larger HTML size).
 
 To disable LQIP, set `?as=run:0`.
 
-For a dominant single-colour background, set `?as=run:1`, like so:
+For a dominant single-colour background, set `?as=run:1`, so:
 
 <!-- prettier-ignore -->
 ```html
@@ -234,8 +231,8 @@ of transformation directives offered by
 
 ### Art direction
 
-Use the `sizes` attribute to define a set of media conditions to hint which image size to select
-when those conditions are true. Read up more on the
+Use the `sizes` attribute to define a set of media conditions that provides hints as to which image
+size should be selected when those conditions are true. Read up more on the
 [art direction problem](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 <!-- prettier-ignore -->
