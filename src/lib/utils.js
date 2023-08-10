@@ -19,4 +19,12 @@ function observe(node) {
   }
 }
 
-export { observe }
+function len(obj) {
+  return obj && Object.keys(obj).length
+}
+
+function lqipToBackground(lqip) {
+  return lqip[0] === '#' ? lqip : `url(data:image/webp;base64,${lqip}) no-repeat center/cover`
+}
+
+export { observe, len, lqipToBackground }

@@ -1,32 +1,36 @@
 <script>
 import Img from './SvelteImg.svelte'
-import { observe } from './utils.js'
+import { observe, len, lqipToBackground } from './utils.js'
 import { onMount } from 'svelte'
 
-/** @type {Object[]} imagetools import */
-export let src = []
+/** @type {Object} imagetools import */
+export let src = {}
 /** @type {HTMLImageElement|undefined} bindable reference to <img> element */
 export let ref = undefined
 
-let sources = []
+let meta = {}
 let background
 let mounted = false
 let loaded = false
 let inview = false
 
-$: if (src.length) {
-  const { base64 } = src.find((i) => i.base64) || {}
-  background = base64 && `url('${base64}') no-repeat center/cover`
-  sources = src.filter((i) => !i.base64)
+$: if (len(src)) {
+  loaded = false
+  const { lqip, src: s, w, h } = src.img
+  background = lqip ? lqipToBackground(lqip) : undefined
+  const { sources = {} } = src
+  meta = { img: { src: s, w, h }, sources }
+} else {
+  meta = {}
 }
 
-onMount(() => {
+onMount(async () => {
   mounted = true
   if (ref.complete) loaded = true
 })
 </script>
 
-{#if src.length}
+{#if len(meta)}
   <div
     class="wrap"
     class:mounted
@@ -34,7 +38,7 @@ onMount(() => {
     use:observe
     on:enter={() => (inview = true)}
   >
-    <Img src={sources} bind:ref on:load={() => (loaded = true)} on:click {...$$restProps} />
+    <Img src={meta} bind:ref on:load on:load={() => (loaded = true)} on:click {...$$restProps} />
     <div class="lqip" style:background />
   </div>
 {/if}
@@ -49,11 +53,10 @@ onMount(() => {
 }
 .mounted :global(img) {
   opacity: 0;
-  transform: scale(var(--reveal-scale, 1.03));
+  transform: var(--reveal-transform, scale(1.05));
 }
-.reveal :global(img) {
-  transition: opacity var(--reveal-opacity-duration, 1s) linear,
-    transform var(--reveal-transform-duration, 0.6s) ease-out;
+.mounted.reveal :global(img) {
+  transition: var(--reveal-transition, opacity 1s linear, transform 0.75s ease-out);
   opacity: 1;
   transform: scale(1);
 }
@@ -61,11 +64,12 @@ onMount(() => {
   position: absolute;
   inset: 0;
   z-index: -1;
+  transform: var(--reveal-transform, scale(1.05));
 }
 .lqip::after {
   content: '';
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(20px);
+  backdrop-filter: var(--reveal-filter, blur(20px));
 }
 </style>
