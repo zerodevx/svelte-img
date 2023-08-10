@@ -29,6 +29,11 @@ test('falls back to standard imagetools without run directive', async ({ page })
   expect(await page.locator('.test-fallback').innerText()).toContain('@imagetools')
 })
 
+test('run with param uses runDefaultDirectives', async ({ page }) => {
+  await page.goto('/')
+  expect(await page.locator('.test-run-param source').count()).toBe(3)
+})
+
 /*
 test('', async ({ page }) => {
   await page.goto('/')

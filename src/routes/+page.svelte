@@ -9,7 +9,7 @@ import i5 from './assets/1920/5.jpg?h=720&as=run'
 import pllx from './assets/pllx.jpg?h=1024&as=run'
 import Img, { FxReveal, FxParallax } from '$lib/index.js'
 import { version } from '$app/environment'
-import testSingle from './assets/640/01.jpg?w=80&h=80&as=run:0'
+import testSingle from './assets/640/01.jpg?w=80&h=80&format=jpg&as=run:0'
 import testFallback from './assets/640/01.jpg?h=80'
 
 const modules = import.meta.glob('./assets/640/*.jpg', {
@@ -108,11 +108,13 @@ export default defineConfig({
   </blockquote>
 </div>
 
-<Img
-  class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover mb-16 test-1px"
-  src={i2}
-  alt="cat"
-/>
+<div class="test-run-param">
+  <Img
+    class="w-full h-[32rem] max-w-[1920px] mx-auto object-cover mb-16 test-1px"
+    src={i2}
+    alt="cat"
+  />
+</div>
 
 <div class="prose mx-auto px-4 mb-8">
   <blockquote>Which looks like this.</blockquote>
