@@ -30,7 +30,9 @@ function main({
 } = {}) {
   return imagetools({
     defaultDirectives: (url) =>
-      url.searchParams.get('as') === 'run' ? runDefaultDirectives : defaultDirectives,
+      url.searchParams.get('as')?.split(':')[0] === 'run'
+        ? runDefaultDirectives
+        : defaultDirectives,
     extendOutputFormats: (builtins) => ({ ...extendOutputFormats(builtins), run }),
     exclude,
     ...rest
