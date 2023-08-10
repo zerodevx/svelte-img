@@ -1,8 +1,8 @@
-declare module '*?run' {
-  const image: Record<string, any>[]
-  export default image
+declare module '*?as=run' {
+  var img
+  export default img
 }
-declare module '*&run' {
-  const image: Record<string, any>[]
-  export default image
+declare module '*&as=run' {
+  var img
+  export default img
 }
