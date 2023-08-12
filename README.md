@@ -231,8 +231,8 @@ of transformation directives offered by
 
 ### Art direction
 
-Use the `sizes` attribute to define a set of media conditions that provides hints as to which image
-size should be selected when those conditions are true. Read up more on the
+Use the `sizes` attribute to define media conditions that provide hints as to which image size to
+select when those conditions are true. Read up more on the
 [art direction problem](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 <!-- prettier-ignore -->
@@ -255,7 +255,7 @@ attribute on the rendered `<img>` tag by default. This is supported by
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?run'
+  import src from '$lib/a/cat.jpg?as=run'
   import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -320,7 +320,7 @@ for me, but you can apply your own using CSS.
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?run'
+  import src from '$lib/a/cat.jpg?as=run'
   import Img from '@zerodevx/svelte-img'
 
   let loaded
@@ -352,7 +352,7 @@ viewport.
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?run'
+  import src from '$lib/a/cat.jpg?as=run'
   import { FxReveal as Img } from '@zerodevx/svelte-img'
 </script>
 
@@ -385,7 +385,7 @@ The default factor is `0.75`.
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?run'
+  import src from '$lib/a/cat.jpg?as=run'
   import { FxParallax as Img } from '@zerodevx/svelte-img'
 </script>
 
