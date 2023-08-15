@@ -13,7 +13,7 @@ function run(cfg) {
       } else {
         const { dominant } = await image.stats()
         const { r, g, b } = dominant
-        data = `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`
+        data = '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)
       }
       pic.img.lqip = data
     }
