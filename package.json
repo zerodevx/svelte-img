@@ -67,6 +67,7 @@
       ]
     }
   },
+  "sideEffects": false,
   "files": [
     "dist"
   ],
