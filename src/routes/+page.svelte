@@ -7,7 +7,7 @@ import i3 from './assets/1920/3.jpg?h=720&as=run'
 import i4 from './assets/1920/4.jpg?h=720&as=run'
 import i5 from './assets/1920/5.jpg?h=720&as=run'
 import pllx from './assets/pllx.jpg?h=1024&as=run'
-import Img, { FxReveal, FxParallax } from '$lib/index.js'
+import Img, { FxReveal, FxParallax } from '$lib'
 import { version } from '$app/environment'
 import testSingle from './assets/640/01.jpg?w=80&h=80&format=jpg&as=run:0'
 import testFallback from './assets/640/01.jpg?h=80'
@@ -31,9 +31,9 @@ let selected = 0
       <h1>svelte-img</h1>
       <div class="badge badge-neutral ml-2 font-mono text-xs">v{version}</div>
       <p>High-performance responsive/progressive images for SvelteKit.</p>
-      <a class="btn btn-primary" href="https://github.com/zerodevx/svelte-img">
+      <a class="btn btn-primary" href="https://github.com/zerodevx/svelte-img" target="_blank">
         <span class="icon-[mdi--github] h-6 w-6" />
-        View Github Repo
+        Visit Github Repo
       </a>
     </div>
   </div>
@@ -67,19 +67,19 @@ export default defineConfig({
 <Img class="cool kitty" src={cat} alt="Very meow" />`)}</code
     ></pre>
   <h2>Showcase</h2>
-  <blockquote>
+  <p>
     By default, the original image is transformed into 9 variants - <code>480/1024/1920</code>
     widths at <code>avif/webp/jpg</code> formats, with an inline <code>base64</code> low-quality image
     placeholder (LQIP) background.
-  </blockquote>
+  </p>
 </div>
 
 <Img class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] object-cover" src={i1} alt="cat" />
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>
-    The LQIP is usually a 16px <code>webp;base64</code> data URI at about ≈150 bytes.
-  </blockquote>
+  <p>
+    The LQIP is typically a 16px <code>webp;base64</code> data URI at about ≈150 bytes.
+  </p>
 </div>
 
 <img
@@ -89,23 +89,20 @@ export default defineConfig({
 />
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>
-    Though not recommended, you can apply a Gaussian blur <code>backdrop-filter</code>.
-  </blockquote>
+  <p>
+    It's <em>not</em> recommended, but you can apply a Gaussian blur <code>backdrop-filter</code>.
+  </p>
 </div>
 
 <div class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] overflow-hidden">
-  <img
-    class="h-full w-full scale-105 object-cover blur"
-    src="data:image/webp;base64,{i1.img.lqip}"
-    alt="cat lqip"
+  <div
+    class="h-full w-full blur"
+    style="background: url(data:image/webp;base64,{i1.img.lqip}) no-repeat center/cover"
   />
 </div>
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>
-    Not much difference, is there? The next image has a dominant colour placeholder instead.
-  </blockquote>
+  <p>Not much difference, is there? The next image has a dominant colour placeholder instead.</p>
 </div>
 
 <div class="test-run-param">
@@ -117,15 +114,15 @@ export default defineConfig({
 </div>
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>Which looks like this.</blockquote>
+  <p>Which looks like this.</p>
 </div>
 
 <div class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px]" style="background:{i2.img.lqip}" />
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>
-    You can also reveal images with <code>fade-in/zoom</code> special effects.
-  </blockquote>
+  <p>
+    You can also reveal images with <code>fade-in</code> special effects.
+  </p>
 </div>
 
 <div class="mb-16">
@@ -141,7 +138,7 @@ export default defineConfig({
 </div>
 
 <div class="prose mx-auto mb-8 px-4">
-  <blockquote>Or even apply parallax scrolling special effects.</blockquote>
+  <p>Or even apply parallax scrolling special effects.</p>
 </div>
 
 <div class="mx-auto mb-16 w-full max-w-[1920px]">
@@ -151,15 +148,16 @@ export default defineConfig({
 <div class="prose mx-auto mb-16 px-4">
   <blockquote>
     The <code>svelte-img</code> component tries, as much as possible, to be a drop-in replacement
-    for the native HTML
-    <code>{esc(`<img>`)}</code> tag. Side-effects are kept to a minimum, so things should still work
-    even without JavaScript. Try it - disable JS on this page and refresh, and check out the Lighthouse
-    score too.
+    for the native HTML <code>{esc(`<img>`)}</code> tag.
   </blockquote>
-  <blockquote>
+  <p>
+    Side-effects are kept to a minimum, so things should still work even without JavaScript. Try it
+    - disable JS on this page and refresh, and check out the Lighthouse score too.
+  </p>
+  <p>
     The next example however does require JavaScript, because interactivity. It uses the
-    <code>Vite</code> pattern for glob imports to load a local dir of images, like so:
-  </blockquote>
+    <code>Vite</code> pattern for glob imports to load a local directory of images, like so:
+  </p>
   <pre><code
       >{esc(`const modules = import.meta.glob('$lib/assets/sm/*.jpg', {
   import: 'default',
@@ -207,7 +205,7 @@ const images = Object.entries(modules).map((i) => i[1])
 </footer>
 
 <style>
-:global(img.blur)::after {
+.blur::after {
   content: '';
   position: absolute;
   inset: 0;

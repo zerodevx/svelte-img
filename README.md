@@ -115,9 +115,7 @@ widths in `avif/webp/jpg` formats; and a `16px webp/base64` low-quality image pl
 To change this globally, edit your `vite.config.js`:
 
 ```js
-import { defineConfig } from 'vite'
-import { sveltekit } from '@sveltejs/kit/vite'
-import { imagetools } from '@zerodevx/svelte-img/vite'
+import ...
 
 // By default, directives are 'w=480;1024;1920&format=avif;webp;jpg' (9 variants)
 export default defineConfig({
@@ -346,8 +344,7 @@ for me, but you can apply your own using CSS.
 
 ### Fade-in on reveal
 
-Reveal images with a fade-in/zoom effect (aka medium.com) when they are loaded **and** in the
-viewport.
+Reveal images with a fade-in effect (aka medium.com) when they are loaded **and** in the viewport.
 
 <!-- prettier-ignore -->
 ```html
@@ -363,9 +360,9 @@ viewport.
     width: 640px;
     height: 480px;
     
-    /* These CSS vars (shown with their default vals) are exposed */
-    --reveal-transform: scale(1.05);
-    --reveal-transition: opacity 1s linear, transform 0.75s ease-out;
+    /* These CSS vars (with their default values) are exposed */
+    --reveal-transform: scale(1.02);
+    --reveal-transition: opacity 1s ease-in, transform 0.8s ease-out;
     --reveal-filter: blur(20px);
   }
 </style>
