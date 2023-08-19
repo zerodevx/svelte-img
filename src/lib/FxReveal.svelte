@@ -24,7 +24,7 @@ $: if (len(src)) {
   meta = {}
 }
 
-onMount(async () => {
+onMount(() => {
   mounted = true
   if (ref.complete) loaded = true
 })
@@ -53,10 +53,10 @@ onMount(async () => {
 }
 .mounted :global(img) {
   opacity: 0;
-  transform: var(--reveal-transform, scale(1.05));
+  transform: var(--reveal-transform, scale(1.02));
 }
 .mounted.reveal :global(img) {
-  transition: var(--reveal-transition, opacity 1s linear, transform 0.75s ease-out);
+  transition: var(--reveal-transition, opacity 1s ease-in, transform 0.8s ease-out);
   opacity: 1;
   transform: scale(1);
 }
@@ -64,7 +64,6 @@ onMount(async () => {
   position: absolute;
   inset: 0;
   z-index: -1;
-  transform: var(--reveal-transform, scale(1.05));
 }
 .lqip::after {
   content: '';
