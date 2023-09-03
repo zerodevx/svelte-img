@@ -324,7 +324,7 @@ for me, but you can apply your own using CSS.
   let loaded
 </script>
 
-<Img class="better-blur" class={loaded} on:load={() => (loaded = true)} {src} alt="cat" />
+<Img class="better-blur {loaded ? 'loaded' : ''}" on:load={() => (loaded = true)} {src} alt="cat" />
 
 <style>
   :global(img.better-blur)::after {
