@@ -12,10 +12,6 @@ Includes special effects:
 
 Hope you like cats. Demo: https://zerodevx.github.io/svelte-img/
 
-> [!WARNING]  
-> These are the `v2` docs; there are **breaking changes**! Read up on how to
-> [migrate](https://github.com/zerodevx/svelte-img/releases/tag/v2.0.0).
-
 ## Install
 
 Install the package:
@@ -117,22 +113,50 @@ To change this globally, edit your `vite.config.js`:
 ```js
 import ...
 
-// By default, directives are 'w=480;1024;1920&format=avif;webp;jpg' (9 variants)
+// By default, `run` is set to 'w=480;1024;1920&format=avif;webp;jpg' (9 variants)
 export default defineConfig({
   plugins: [
     sveltekit(),
     imagetools({
-      // Now we change it to generate 4 variants instead: 640/1280w in webp/jpg
-      runDefaultDirectives: new URLSearchParams('w=640;1280&format=webp;jpg')
+      profiles: {
+        // Now we change `run` to generate 4 variants instead: 640/1280w in webp/jpg
+        run: new URLSearchParams('w=640;1280&format=webp;jpg')
+      }
     })
   ]
 })
 ```
 
-> [!IMPORTANT]  
-> The `?as=run` preset takes default directives from **`runDefaultDirectives`**! When the preset is
-> not used, behaviour falls back to standard `vite-imagetools`, which in turn take defaults from
-> `defaultDirectives` as usual, so both can co-exist.
+> [!NOTE]  
+> `runDefaultDirectives` is deprecated and will be removed in the next major; use `profiles`
+> instead. When a preset is not used, behaviour falls back to standard `vite-imagetools`, which in
+> turn take defaults from `defaultDirectives` as usual, so both can co-exist.
+
+### Profiles
+
+Use profiles to manage multiple defaults. Define in your `vite.config.js`:
+
+```js
+export default defineConfig({
+  plugins: [
+    sveltekit(),
+    imagetools({
+      profiles: {
+        sm: new URLSearchParams('w=640&format=webp;jpg'),
+        lg: new URLSearchParams('w=640;1280;1920&format=webp;jpg')
+      }
+    })
+  ]
+})
+```
+
+Then invoke in your app:
+
+```js
+import sm from '$lib/a/1.jpg?as=sm' // use `sm` profile
+import lg from '$lib/a/2.jpg?as=lg' // use `lg` profile
+import normal from '$lib/a/3.jpg?as=run'
+```
 
 ### On a per-image basis
 
@@ -149,16 +173,16 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 <Img {src} alt="cat" />
 ```
 
-> [!IMPORTANT]  
+> [!NOTE]  
 > Order of `format` matters - the _last_ format is used as the fallback image.
 
-If only **one** variant is generated, only the `<img>` tag is rendered, so:
+If only **one** variant is generated, then just the `<img>` tag renders, so:
 
 <!-- prettier-ignore -->
 ```html
 <script>
-  // Generate only 1 variant: 640x640 in png
-  import src from '$lib/a/cat.jpg?w=640&h=640&format=png&as=run'
+  // Generate only 1 variant: 640x640 in jpg
+  import src from '$lib/a/cat.jpg?w=640&h=640&format=jpg&as=run'
   import Img from '@zerodevx/svelte-img'
 </script>
 
@@ -175,7 +199,7 @@ Renders into:
   decoding="async"
   style="background: url(data:image/webp;base64,XXX) no-repeat center/cover"
   alt="cat"
-  src="path/to/png-640"
+  src="path/to/jpg-640"
 />
 ```
 
@@ -318,24 +342,35 @@ for me, but you can apply your own using CSS.
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?as=run'
   import Img from '@zerodevx/svelte-img'
+  import src from '$lib/a/cat.jpg?as=run'
+  import { onMount } from 'svelte'
 
-  let loaded
+  let ref, mounted, loaded
+  onMount(() => {
+    if (ref.complete) loaded = true
+    mounted = true
+  })
 </script>
 
-<Img class="better-blur {loaded ? 'loaded' : ''}" on:load={() => (loaded = true)} {src} alt="cat" />
+<div class="wrap">
+  <Img {src} bind:ref on:load={() => (loaded = true)} />
+  <div class="blur" class:mounted class:loaded />
+</div>
 
 <style>
-  :global(img.better-blur)::after {
-    content: '';
+  .wrap {
+    position: relative;
+    overflow: hidden;
+  }
+  .blur {
     position: absolute;
     inset: 0;
     backdrop-filter: blur(20px);
-    pointer-events: none;    
+    pointer-events: none;
   }
-  :global(img.better-blur.loaded)::after {
-    backdrop-filter: none;
+  .mounted.loaded {
+    display: none;
   }
 </style>
 ```
