@@ -129,7 +129,7 @@ export default defineConfig({
 
 > [!NOTE]  
 > `runDefaultDirectives` is deprecated and will be removed in the next major; use `profiles`
-> instead. When a preset is not used, behaviour falls back to standard `vite-imagetools`, which in
+> instead. When a profile is not used, behaviour falls back to standard `vite-imagetools`, which in
 > turn take defaults from `defaultDirectives` as usual, so both can co-exist.
 
 ### Profiles
@@ -176,7 +176,7 @@ Widths/formats can be applied to a particular image. From your `.svelte` file:
 > [!NOTE]  
 > Order of `format` matters - the _last_ format is used as the fallback image.
 
-If only **one** variant is generated, then just the `<img>` tag renders, so:
+If just **one** variant is generated, then only the `<img>` tag renders, so:
 
 <!-- prettier-ignore -->
 ```html
@@ -346,16 +346,15 @@ for me, but you can apply your own using CSS.
   import src from '$lib/a/cat.jpg?as=run'
   import { onMount } from 'svelte'
 
-  let ref, mounted, loaded
+  let ref, loaded
   onMount(() => {
     if (ref.complete) loaded = true
-    mounted = true
   })
 </script>
 
 <div class="wrap">
   <Img {src} bind:ref on:load={() => (loaded = true)} />
-  <div class="blur" class:mounted class:loaded />
+  <div class="blur" class:loaded />
 </div>
 
 <style>
@@ -369,7 +368,7 @@ for me, but you can apply your own using CSS.
     backdrop-filter: blur(20px);
     pointer-events: none;
   }
-  .mounted.loaded {
+  .loaded {
     display: none;
   }
 </style>
