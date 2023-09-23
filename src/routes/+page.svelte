@@ -11,15 +11,14 @@ import Img, { FxReveal, FxParallax } from '$lib'
 import { version } from '$app/environment'
 import testSingle from './assets/640/01.jpg?w=80&h=80&format=jpg&as=run:0'
 import testFallback from './assets/640/01.jpg?h=80'
+import testProfile from './assets/640/01.jpg?as=run2'
 
 const modules = import.meta.glob('./assets/640/*.jpg', {
   import: 'default',
   eager: true,
   query: { w: 640, h: 640, fit: 'cover', as: 'run' }
 })
-
 const esc = (i) => i
-
 const images = Object.entries(modules).map((i) => i[1])
 let selected = 0
 </script>
@@ -94,11 +93,11 @@ export default defineConfig({
   </p>
 </div>
 
-<div class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] overflow-hidden">
-  <div
-    class="h-full w-full blur"
-    style="background: url(data:image/webp;base64,{i1.img.lqip}) no-repeat center/cover"
-  />
+<div
+  class="mx-auto mb-16 h-[32rem] w-full max-w-[1920px] overflow-hidden"
+  style="background: url(data:image/webp;base64,{i1.img.lqip}) no-repeat center/cover"
+>
+  <div class="h-full w-full backdrop-blur-[20px]" />
 </div>
 
 <div class="prose mx-auto mb-8 px-4">
@@ -195,6 +194,9 @@ const images = Object.entries(modules).map((i) => i[1])
   <Img src={testSingle} alt="test" />
 </div>
 <div class="test-fallback hidden">{JSON.stringify(testFallback)}</div>
+<div class="test-profile hidden">
+  <Img src={testProfile} alt="test" />
+</div>
 <!-- End tests -->
 
 <footer
@@ -203,13 +205,3 @@ const images = Object.entries(modules).map((i) => i[1])
   <span class="icon-[mdi--email] mr-2 h-6 w-6" />
   <a class="link" href="mailto:jason@zerodevx.com">jason@zerodevx.com</a>
 </footer>
-
-<style>
-.blur::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(20px);
-  pointer-events: none;
-}
-</style>

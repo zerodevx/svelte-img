@@ -34,6 +34,15 @@ test('run with param uses runDefaultDirectives', async ({ page }) => {
   expect(await page.locator('.test-run-param source').count()).toBe(3)
 })
 
+test('basic profile tests', async ({ page }) => {
+  await page.goto('/')
+  const img = async (attr) => await page.locator('.test-profile img').getAttribute(attr)
+  expect(await img('height')).toBe('16')
+  expect(await img('width')).toBe('32')
+  expect(await img('style')).toBeDefined()
+  expect(await page.locator('.test-profile source').count()).toBe(0)
+})
+
 /*
 test('', async ({ page }) => {
   await page.goto('/')
