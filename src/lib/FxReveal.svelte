@@ -17,7 +17,7 @@ let inview = false
 $: if (len(src)) {
   loaded = false
   const { lqip, src: s, w, h } = src.img
-  background = lqip ? lqipToBackground(lqip) : undefined
+  background = lqip && !loaded ? lqipToBackground(lqip) : undefined
   const { sources = {} } = src
   meta = { img: { src: s, w, h }, sources }
 } else {
