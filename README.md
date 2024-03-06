@@ -260,12 +260,41 @@ select when those conditions are true. Read up more on the
 <!-- prettier-ignore -->
 ```html
 <script>
-  import src from '$lib/a/cat.jpg?w=480;800as=run
+  import src from '$lib/a/cat.jpg?w=480;800&as=run'
   import Img from '@zerodevx/svelte-img'
 </script>
 
 <!-- If viewport is <=600px, use 480px as viewport width -->
 <Img {src} alt="cat" sizes="(max-width: 600px) 480px, 800px" />
+```
+
+Renders into:
+
+```html
+<picture>
+	<source
+		type="image/avif"
+		sizes="(max-width: 600px) 480px, 800px"
+		srcset="path/to/avif-480 480w,path/to/avif-800 800w"
+	/><source
+		type="image/webp"
+		sizes="(max-width: 600px) 480px, 800px"
+		srcset="path/to/webp-480 480w,path/to/webp-800 800w"
+	/><source
+		type="image/jpeg"
+		sizes="(max-width: 600px) 480px, 800px"
+		srcset="path/to/jpeg-480 480w,path/to/jpeg-800 800w"
+	/>
+	<img
+		alt="cat"
+		width="800"
+		height="600"
+		loading="lazy"
+		decoding="async"
+		src="path/to/jpeg-800"
+		style="background: url(data:image/webp;base64,XXX) center center / cover no-repeat;"
+	/>
+</picture>
 ```
 
 ### Lazy loading
