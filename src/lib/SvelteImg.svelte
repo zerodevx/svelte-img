@@ -12,7 +12,7 @@ export let width = undefined
 export let height = undefined
 /** @type {'lazy'|'eager'} img tag `loading` attr */
 export let loading = 'lazy'
-/** @type {'auto'|'high'|'low'} img tag `loading` attr */
+/** @type {'auto'|'high'|'low'} img tag `fetchpriority` attr */
 export let fetchpriority = 'auto'
 /** @type {'async'|'auto'|'sync'} img tag `decoding` attr */
 export let decoding = 'async'
