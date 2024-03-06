@@ -12,6 +12,8 @@ export let width = undefined
 export let height = undefined
 /** @type {'lazy'|'eager'} img tag `loading` attr */
 export let loading = 'lazy'
+/** @type {'auto'|'high'|'low'} img tag `loading` attr */
+export let fetchpriority = 'auto'
 /** @type {'async'|'auto'|'sync'} img tag `decoding` attr */
 export let decoding = 'async'
 /** @type {HTMLImageElement|undefined} bindable reference to `<img>` element */
@@ -35,6 +37,7 @@ $: if (len(img)) {
     <img
       {loading}
       {decoding}
+      {fetchpriority}
       width={width || img.w || undefined}
       height={height || img.h || undefined}
       style:background
