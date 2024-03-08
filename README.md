@@ -263,7 +263,7 @@ select when those conditions are true. Read up more on
   import Img from '@zerodevx/svelte-img'
 </script>
 
-<!-- When the viewport is <=600px, tell the browser's image preprocessor that once the CSS for our 
+<!-- When the viewport is <=600px, tell the browser's image preloader that once the CSS for our 
 design has been parsed and applied, we expect the width of the image in our design to be 480px -->
 <img {src} alt="cat" sizes="(max-width: 600px) 480px, 800px" />
 ```
