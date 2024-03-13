@@ -1,8 +1,4 @@
-declare module '*?as=run' {
-  var img
-  export default img
-}
-declare module '*&as=run' {
-  var img
-  export default img
+declare module './assets/*' {
+  let meta
+  export default meta
 }

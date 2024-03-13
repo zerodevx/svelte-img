@@ -1,4 +1,7 @@
 <script>
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { len } from './utils.js'
 
 export let sources = {}

@@ -7,8 +7,8 @@
     "dev": "vite dev",
     "build": "npm run lint && vite build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss .",
     "lint": "prettier --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss --check . && eslint . && npm run check",
     "test": "playwright test",
@@ -35,6 +35,8 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.35.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "postcss": "^8.4.35",
     "postcss-load-config": "^5.0.3",
     "prettier": "^3.2.5",
@@ -69,7 +71,9 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
   ],
   "license": "ISC",
   "repository": "github:zerodevx/svelte-img",
