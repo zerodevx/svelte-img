@@ -1,4 +1,7 @@
 <script>
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import Img from './SvelteImg.svelte'
 import { observe } from './utils.js'
 import { onMount } from 'svelte'

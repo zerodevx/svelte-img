@@ -7,8 +7,8 @@
     "dev": "vite dev",
     "build": "npm run lint && vite build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss .",
     "lint": "prettier --plugin prettier-plugin-svelte --plugin prettier-plugin-tailwindcss --check . && eslint . && npm run check",
     "test": "playwright test",
@@ -16,36 +16,38 @@
     "deploy": "npx gh-pages -d build -t -f"
   },
   "dependencies": {
-    "vite-imagetools": "5.0.8"
+    "vite-imagetools": "6.2.9"
   },
   "peerDependencies": {
     "svelte": "^3.55.1 || ^4.0.0"
   },
   "devDependencies": {
-    "@fontsource-variable/inter": "^5.0.8",
-    "@iconify-json/mdi": "^1.1.54",
-    "@iconify/tailwind": "^0.1.3",
-    "@playwright/test": "^1.38.1",
-    "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.25.0",
-    "@sveltejs/package": "^2.2.2",
+    "@fontsource-variable/inter": "^5.0.17",
+    "@iconify-json/mdi": "^1.1.64",
+    "@iconify/tailwind": "^0.1.4",
+    "@playwright/test": "^1.42.1",
+    "@sveltejs/adapter-static": "^3.0.1",
+    "@sveltejs/kit": "^2.5.3",
+    "@sveltejs/package": "^2.3.0",
     "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.16",
-    "daisyui": "^3.7.7",
-    "eslint": "^8.50.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-svelte": "^2.33.2",
-    "postcss": "^8.4.30",
-    "postcss-load-config": "^4.0.1",
-    "prettier": "^3.0.3",
-    "prettier-plugin-svelte": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "svelte": "^4.2.1",
-    "svelte-check": "^3.5.2",
-    "tailwindcss": "^3.3.3",
+    "autoprefixer": "^10.4.18",
+    "daisyui": "^4.7.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "postcss": "^8.4.35",
+    "postcss-load-config": "^5.0.3",
+    "prettier": "^3.2.5",
+    "prettier-plugin-svelte": "^3.2.2",
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "svelte": "^4.2.12",
+    "svelte-check": "^3.6.7",
+    "tailwindcss": "^3.4.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9"
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6"
   },
   "type": "module",
   "exports": {
@@ -69,7 +71,9 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
   ],
   "license": "ISC",
   "repository": "github:zerodevx/svelte-img",

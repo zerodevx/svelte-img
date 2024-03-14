@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 /* eslint-disable no-useless-escape */
 import hero from './assets/hero.jpg?w=480;1024;1920;2560;h=720&as=run'
 import i1 from './assets/1920/1.jpg?h=720&as=run'
@@ -7,19 +7,20 @@ import i3 from './assets/1920/3.jpg?h=720&as=run'
 import i4 from './assets/1920/4.jpg?h=720&as=run'
 import i5 from './assets/1920/5.jpg?h=720&as=run'
 import pllx from './assets/pllx.jpg?h=1024&as=run'
-import Img, { FxReveal, FxParallax } from '$lib'
+import Img, { FxReveal, FxParallax } from '$lib/index.js'
 import { version } from '$app/environment'
 import testSingle from './assets/640/01.jpg?w=80&h=80&format=jpg&as=run:0'
 import testFallback from './assets/640/01.jpg?h=80'
 import testProfile from './assets/640/01.jpg?as=run2'
+import type { Picture } from 'vite-imagetools'
 
 const modules = import.meta.glob('./assets/640/*.jpg', {
   import: 'default',
   eager: true,
   query: { w: 640, h: 640, fit: 'cover', as: 'run' }
 })
-const esc = (i) => i
-const images = Object.entries(modules).map((i) => i[1])
+const esc = (i: string) => i
+const images = Object.entries(modules).map((i) => i[1]) as Picture[]
 let selected = 0
 </script>
 
