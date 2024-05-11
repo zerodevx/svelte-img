@@ -1,23 +1,31 @@
 <script>
 import { len } from './utils.js'
 
-export let sources = {}
-export let sizes = undefined
+/**
+ * @typedef PictureProps
+ * @property {Object} sources
+ * @property {string | undefined} sizes
+ */
 
-let srcs = []
+/** @type {PictureProps} */
+let { sources = {}, sizes, children } = $props()
 
-$: if (len(sources)) {
-  const list = []
-  for (const [format, imgs] of Object.entries(sources)) {
-    list.push({
-      format,
-      srcset: imgs.map((i) => `${i.src} ${i.w}w`).join()
-    })
+let srcs = $state([])
+
+$effect(() => {
+  if (len(sources)) {
+    const list = []
+    for (const [format, imgs] of Object.entries(sources)) {
+      list.push({
+        format,
+        srcset: imgs.map((i) => `${i.src} ${i.w}w`).join()
+      })
+    }
+    srcs = list
+  } else {
+    srcs = []
   }
-  srcs = list
-} else {
-  srcs = []
-}
+})
 </script>
 
 {#if len(srcs)}
@@ -25,8 +33,8 @@ $: if (len(sources)) {
     {#each srcs as { format, srcset }}
       <source type="image/{format}" {sizes} {srcset} />
     {/each}
-    <slot />
+    {@render children()}
   </picture>
 {:else}
-  <slot />
+  {@render children()}
 {/if}
