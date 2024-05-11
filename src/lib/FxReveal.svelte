@@ -3,26 +3,44 @@ import Img from './SvelteImg.svelte'
 import { observe, len, lqipToBackground } from './utils.js'
 import { onMount } from 'svelte'
 
-/** @type {Object} imagetools import */
-export let src = {}
-/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
-export let ref = undefined
+/**
+ * @callback onclick
+ * @param {MouseEvent & { currentTarget: EventTarget & HTMLImageElement }} event
+ */
 
-let meta = {}
-let background
-let mounted = false
-let loaded = false
-let inview = false
+/**
+ * @callback onload
+ * @param {Event & { currentTarget: EventTarget & Element }} event
+ */
 
-$: if (len(src)) {
-  loaded = false
-  const { lqip, src: s, w, h } = src.img
-  background = lqip ? lqipToBackground(lqip) : undefined
-  const { sources = {} } = src
-  meta = { img: { src: s, w, h }, sources }
-} else {
-  meta = {}
-}
+/**
+ * @typedef FxRevealProps
+ * @property {Object} src imagetools import
+ * @property {HTMLImageElement | undefined} ref bindable reference to <img> element
+ * @property {onclick} onclick
+ * @property {onload} onload
+ */
+
+/** @type {FxRevealProps} */
+let { src, ref, onload = () => (loaded = true), onclick, ...rest } = $props()
+
+let meta = $state({})
+let background = $state(undefined)
+let mounted = $state(false)
+let loaded = $state(false)
+let inview = $state(false)
+
+$effect(() => {
+  if (len(src)) {
+    loaded = false
+    const { lqip, src: s, w, h } = src.img
+    background = lqip ? lqipToBackground(lqip) : undefined
+    const { sources = {} } = src
+    meta = { img: { src: s, w, h }, sources }
+  } else {
+    meta = {}
+  }
+})
 
 onMount(() => {
   mounted = true
@@ -36,9 +54,9 @@ onMount(() => {
     class:mounted
     class:reveal={loaded && inview}
     use:observe
-    on:enter={() => (inview = true)}
+    onenter={() => (inview = true)}
   >
-    <Img src={meta} bind:ref on:load on:load={() => (loaded = true)} on:click {...$$restProps} />
+    <Img src={meta} bind:ref {onload} {onclick} {...rest} />
     <div class="lqip" style:background></div>
   </div>
 {/if}
