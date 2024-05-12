@@ -33,7 +33,7 @@ let {
   height,
   loading = 'lazy',
   decoding = 'async',
-  ref,
+  ref = $bindable(),
   ...rest
 } = $props()
 

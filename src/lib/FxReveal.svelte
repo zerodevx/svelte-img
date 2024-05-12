@@ -22,7 +22,7 @@ import { onMount } from 'svelte'
  */
 
 /** @type {FxRevealProps} */
-let { src, ref, onload = () => (loaded = true), onclick, ...rest } = $props()
+let { src, ref = $bindable(), onload = () => (loaded = true), onclick, ...rest } = $props()
 
 let meta = $state({})
 let background = $state(undefined)

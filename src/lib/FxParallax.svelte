@@ -26,7 +26,7 @@ import { onMount } from 'svelte'
  */
 
 /** @type {FxParallaxProps} */
-let { factor = 0.75, ref, onload, onclick, ...rest } = $props()
+let { factor = 0.75, ref = $bindable(), onload, onclick, ...rest } = $props()
 
 let mounted = $state(false)
 let inview = $state(false)
