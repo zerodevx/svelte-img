@@ -3,27 +3,40 @@ import Img from './SvelteImg.svelte'
 import { observe } from './utils.js'
 import { onMount } from 'svelte'
 
-let classes = ''
-export { classes as class }
 /**
- * @type {number} number between 0 to 1 to control speed relative to scroll
+ * @callback onclick
+ * @param {MouseEvent & { currentTarget: EventTarget & HTMLImageElement }} event
+ */
+
+/**
+ * @callback onload
+ * @param {Event & { currentTarget: EventTarget & Element }} event
+ */
+
+/**
+ * @typedef FxParallaxProps
+ * @property {string} class
+ * @property {number} factor number between 0 to 1 to control speed relative to scroll
  * - value closer to 0 is faster, while a value closer to 1 is slower
  * - value of 1 behaves normally
  * - value of 0 effectively makes the element scroll fixed with the page
+ * @property {HTMLImageElement | undefined} ref bindable reference to <img> element
+ * @property {onclick} onclick
+ * @property {onload} onload
  */
-export let factor = 0.75
-/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
-export let ref = undefined
 
-let mounted = false
-let inview = false
-let scrollY = 0
-let offsetHeight = 0
-let screenHeight = 0
-let stamp = 0
-let height = 100
-let offset = 0
-let normalized = 0
+/** @type {FxParallaxProps} */
+let { factor = 0.75, ref = $bindable(), onload, onclick, ...rest } = $props()
+
+let mounted = $state(false)
+let inview = $state(false)
+let scrollY = $state(0)
+let offsetHeight = $state(0)
+let screenHeight = $state(0)
+let stamp = $state(0)
+let height = $state(100)
+let offset = $state(0)
+let normalized = $state(0)
 
 function entered(e) {
   stamp = scrollY + e.detail.boundingClientRect.top
@@ -34,15 +47,19 @@ function resized() {
   screenHeight = window.screen.height
 }
 
-$: normalized = Math.abs(factor - 1)
+$effect(() => (normalized = Math.abs(factor - 1)))
 
-$: if (screenHeight && offsetHeight) {
-  height = 100 + normalized * (screenHeight / offsetHeight) * 100
-}
+$effect(() => {
+  if (screenHeight && offsetHeight) {
+    height = 100 + normalized * (screenHeight / offsetHeight) * 100
+  }
+})
 
-$: if (inview) {
-  offset = Math.floor((scrollY - stamp) * normalized)
-}
+$effect(() => {
+  if (inview) {
+    offset = Math.floor((scrollY - stamp) * normalized)
+  }
+})
 
 onMount(() => {
   resized()
@@ -50,22 +67,22 @@ onMount(() => {
 })
 </script>
 
-<svelte:window bind:scrollY on:resize={resized} />
+<svelte:window bind:scrollY onresize={resized} />
 
 <div
-  class="wrap {classes}"
+  class="wrap {rest.class}"
   class:mounted
   bind:offsetHeight
   use:observe
-  on:enter={entered}
-  on:leave={() => (inview = false)}
+  onenter={entered}
+  onleave={() => (inview = false)}
 >
   <Img
     style="height:{height}%;transform:translate(0,{offset}px)"
     bind:ref
-    on:load
-    on:click
-    {...$$restProps}
+    {onload}
+    {onclick}
+    {...rest}
   />
 </div>
 

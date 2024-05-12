@@ -2,36 +2,55 @@
 import Picture from './Picture.svelte'
 import { len, lqipToBackground } from './utils.js'
 
-/** @type {Object} imagetools import */
-export let src = {}
-/** @type {string|undefined} img tag `sizes` attr */
-export let sizes = undefined
-/** @type {number|undefined} img width override */
-export let width = undefined
-/** @type {number|undefined} img height override */
-export let height = undefined
-/** @type {'lazy'|'eager'} img tag `loading` attr */
-export let loading = 'lazy'
-/** @type {'async'|'auto'|'sync'} img tag `decoding` attr */
-export let decoding = 'async'
-/** @type {HTMLImageElement|undefined} bindable reference to `<img>` element */
-export let ref = undefined
+/**
+ * @callback onclick
+ * @param {MouseEvent & { currentTarget: EventTarget & HTMLImageElement }} event
+ */
 
-let sources = []
-let img = {}
-let background = undefined
+/**
+ * @callback onload
+ * @param {Event & { currentTarget: EventTarget & Element }} event
+ */
 
-$: sources = src.sources || {}
-$: img = src.img || {}
-$: if (len(img)) {
-  const { lqip } = img
-  background = lqip ? lqipToBackground(lqip) : undefined
-}
+/**
+ * @typedef SvelteImgProps
+ * @property {Object} src
+ * @property {string | undefined} sizes
+ * @property {number | undefined} width
+ * @property {number | undefined} height
+ * @property {'lazy' | 'eager'} loading
+ * @property {'async' | 'auto'} decoding
+ * @property {HTMLImageElement | undefined} ref
+ * @property {onclick} onclick
+ * @property {onload} onload
+ */
+
+/** @type {SvelteImgProps}  */
+let {
+  src = {},
+  sizes,
+  width,
+  height,
+  loading = 'lazy',
+  decoding = 'async',
+  ref = $bindable(),
+  ...rest
+} = $props()
+
+let sources = $derived(src.sources || {})
+let img = $state(src.img || {})
+let background = $state(undefined)
+
+$effect(() => {
+  if (len(img)) {
+    const { lqip } = img
+    background = lqip ? lqipToBackground(lqip) : undefined
+  }
+})
 </script>
 
 {#if len(img)}
   <Picture {sources} {sizes}>
-    <!-- svelte-ignore a11y-missing-attribute a11y-no-noninteractive-element-interactions -->
     <img
       {loading}
       {decoding}
@@ -39,9 +58,7 @@ $: if (len(img)) {
       height={height || img.h || undefined}
       style:background
       bind:this={ref}
-      on:click
-      on:load
-      {...$$restProps}
+      {...rest}
       src={img.src}
     />
   </Picture>
