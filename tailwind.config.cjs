@@ -1,4 +1,4 @@
-const { addDynamicIconSelectors } = require('@iconify/tailwind')
+const { addIconSelectors } = require('@iconify/tailwind')
 const dt = require('tailwindcss/defaultTheme')
 
 const config = {
@@ -10,7 +10,7 @@ const config = {
       }
     }
   },
-  plugins: [addDynamicIconSelectors(), require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [addIconSelectors(['mdi']), require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     themes: [
       {
