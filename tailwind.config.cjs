@@ -15,14 +15,14 @@ const config = {
     themes: [
       {
         light: {
-          ...require('daisyui/src/theming/themes')['[data-theme=light]'],
+          ...require('daisyui/src/theming/themes')['light'],
           primary: '#1C75BC',
           'primary-content': 'white'
         }
       },
       {
         dark: {
-          ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
+          ...require('daisyui/src/theming/themes')['dark'],
           primary: '#1C75BC'
         }
       }
