@@ -31,8 +31,8 @@ let selected = 0
       <div class="badge badge-neutral ml-2 font-mono text-xs">v{version}</div>
       <p>High-performance responsive/progressive images for SvelteKit.</p>
       <a class="btn btn-primary" href="https://github.com/zerodevx/svelte-img" target="_blank">
-        <span class="icon-[mdi--github] h-6 w-6" />
-        Visit Github Repo
+        <span class="iconify h-6 w-6 mdi--github" />
+        VISIT GITHUB REPO
       </a>
     </div>
   </div>
@@ -202,6 +202,6 @@ const images = Object.entries(modules).map((i) => i[1])
 <footer
   class="flex h-96 w-full flex-row items-center justify-center bg-neutral text-neutral-content"
 >
-  <span class="icon-[mdi--email] mr-2 h-6 w-6" />
+  <span class="iconify mr-2 h-6 w-6 mdi--email" />
   <a class="link" href="mailto:jason@zerodevx.com">jason@zerodevx.com</a>
 </footer>
