@@ -1,6 +1,6 @@
 <script>
 import '@fontsource-variable/inter'
-import '../app.postcss'
+import '../app.pcss'
 import { dev } from '$app/environment'
 </script>
 
