@@ -1,7 +1,8 @@
-const { addIconSelectors } = require('@iconify/tailwind')
-const dt = require('tailwindcss/defaultTheme')
+import { addIconSelectors } from '@iconify/tailwind'
+import dt from 'tailwindcss/defaultTheme'
 
-const config = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
@@ -29,5 +30,3 @@ const config = {
     ]
   }
 }
-
-module.exports = config
