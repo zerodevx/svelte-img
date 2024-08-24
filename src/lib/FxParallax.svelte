@@ -3,16 +3,26 @@ import Img from './SvelteImg.svelte'
 import { observe } from './utils.js'
 import { onMount } from 'svelte'
 
+/**
+ * Class list forwarded to &lt;img&gt; wrapper
+ * @type {string}
+ */
 let classes = ''
 export { classes as class }
+
 /**
- * @type {number} number between 0 to 1 to control speed relative to scroll
+ * Number between 0 to 1 to control speed relative to scroll:
  * - value closer to 0 is faster, while a value closer to 1 is slower
  * - value of 1 behaves normally
  * - value of 0 effectively makes the element scroll fixed with the page
+ * @type {number}
  */
 export let factor = 0.75
-/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
+
+/**
+ * Bindable reference to &lt;img&gt; element
+ * @type {HTMLImageElement|undefined}
+ */
 export let ref = undefined
 
 let mounted = false
@@ -61,11 +71,11 @@ onMount(() => {
   on:leave={() => (inview = false)}
 >
   <Img
+    {...$$restProps}
     style="height:{height}%;transform:translate(0,{offset}px)"
     bind:ref
     on:load
     on:click
-    {...$$restProps}
   />
 </div>
 

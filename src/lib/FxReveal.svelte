@@ -3,9 +3,16 @@ import Img from './SvelteImg.svelte'
 import { observe, len, lqipToBackground } from './utils.js'
 import { onMount } from 'svelte'
 
-/** @type {Object} imagetools import */
+/**
+ * Imagetools import meta
+ * @type {any}
+ */
 export let src = {}
-/** @type {HTMLImageElement|undefined} bindable reference to <img> element */
+
+/**
+ * Bindable reference to &lt;img&gt; element
+ * @type {HTMLImageElement|undefined}
+ */
 export let ref = undefined
 
 let meta = {}
@@ -38,7 +45,7 @@ onMount(() => {
     use:observe
     on:enter={() => (inview = true)}
   >
-    <Img src={meta} bind:ref on:load on:load={() => (loaded = true)} on:click {...$$restProps} />
+    <Img {...$$restProps} bind:ref on:load on:load={() => (loaded = true)} on:click src={meta} />
     <div class="lqip" style:background />
   </div>
 {/if}
