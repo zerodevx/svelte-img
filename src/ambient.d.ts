@@ -1,8 +1,4 @@
-declare module '*?as=run' {
-  var img
-  export default img
-}
-declare module '*&as=run' {
+declare module './assets/*' {
   var img
   export default img
 }
