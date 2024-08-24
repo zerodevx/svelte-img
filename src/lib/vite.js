@@ -2,6 +2,7 @@ import { imagetools, pictureFormat } from 'vite-imagetools'
 
 function run(cfg) {
   return async function (metadatas) {
+    /** @type {any} */
     const pic = pictureFormat()(metadatas)
     const lqip = (cfg && parseInt(cfg)) ?? 16
     if (lqip) {
@@ -25,7 +26,7 @@ function run(cfg) {
 
 function main({
   profiles = {},
-  // deprecated - to remove in next major
+  /** @deprecated will be removed in next major */
   runDefaultDirectives = new URLSearchParams('w=480;1024;1920&format=avif;webp;jpg'),
   defaultDirectives = new URLSearchParams(),
   exclude = '{build,dist,node_modules}/**/*',
