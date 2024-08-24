@@ -2,19 +2,46 @@
 import Picture from './Picture.svelte'
 import { len, lqipToBackground } from './utils.js'
 
-/** @type {Object} imagetools import */
+/**
+ * Imagetools import meta
+ * @type {any}
+ */
 export let src = {}
-/** @type {string|undefined} img tag `sizes` attr */
+
+/**
+ * &lt;img&gt; element `sizes` attr
+ * @type {string|undefined}
+ */
 export let sizes = undefined
-/** @type {number|undefined} img width override */
+
+/**
+ * &lt;img&gt; `width` override
+ * @type {number|undefined}
+ */
 export let width = undefined
-/** @type {number|undefined} img height override */
+
+/**
+ * &lt;img&gt; `height` override
+ * @type {number|undefined}
+ */
 export let height = undefined
-/** @type {'lazy'|'eager'} img tag `loading` attr */
+
+/**
+ * &lt;img&gt; element `loading` attr
+ * @type {'lazy'|'eager'}
+ */
 export let loading = 'lazy'
-/** @type {'async'|'auto'|'sync'} img tag `decoding` attr */
+
+/**
+ * &lt;img&gt; element `decoding` attr
+ * @type {'async'|'auto'|'sync'}
+ */
 export let decoding = 'async'
-/** @type {HTMLImageElement|undefined} bindable reference to `<img>` element */
+
+/**
+ * Bindable reference to &lt;img&gt; element
+ * @type {HTMLImageElement|undefined}
+ */
 export let ref = undefined
 
 let sources = []
@@ -29,10 +56,23 @@ $: if (len(img)) {
 }
 </script>
 
+<!-- @component
+High-performance responsive/progressive images for SvelteKit.
+
+@example
+<script>
+  import Img from '@zerodevx/svelte-img'
+  import src from '$lib/assets/cat.jpg?as=run'
+</script>
+
+<Img {src} alt="cute cat" />
+-->
+
 {#if len(img)}
   <Picture {sources} {sizes}>
     <!-- svelte-ignore a11y-missing-attribute a11y-no-noninteractive-element-interactions -->
     <img
+      {...$$restProps}
       {loading}
       {decoding}
       width={width || img.w || undefined}
@@ -41,7 +81,6 @@ $: if (len(img)) {
       bind:this={ref}
       on:click
       on:load
-      {...$$restProps}
       src={img.src}
     />
   </Picture>
