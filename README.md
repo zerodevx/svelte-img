@@ -47,8 +47,8 @@ declare module '$lib/assets/*' {
 ### Under the hood
 
 Local image transformations are delegated to the excellent
-[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) with a custom `run` directive.
-This preset generates optimized images with sensible defaults, including a `base64` low-quality
+[`vite-imagetools`](https://github.com/JonasKruckenberg/imagetools) with a custom `run` directive.
+This preset generates optimised images with sensible defaults, including a `base64` low-quality
 image placeholder.
 
 Invoke the preset with the `?as=run` query param:
@@ -238,7 +238,7 @@ Renders into:
 
 The full [repertoire](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md)
 of transformation directives offered by
-[vite-imagetools](https://github.com/JonasKruckenberg/imagetools) can be used.
+[`vite-imagetools`](https://github.com/JonasKruckenberg/imagetools) can be used.
 
 <!-- prettier-ignore -->
 ```html
@@ -263,8 +263,11 @@ select when those conditions are true. Read up more on
   import Img from '@zerodevx/svelte-img'
 </script>
 
-<!-- When the viewport is <=600px, tell the browser's image preloader that once the CSS for our 
-design has been parsed and applied, we expect the width of the image in our design to be 480px -->
+<!-- 
+When the viewport is <=600px, tell the browser's image preloader that once 
+the CSS for our design has been parsed and applied, we expect the width of
+the image in our design to be 480px. 
+-->
 <img {src} alt="cat" sizes="(max-width: 600px) 480px, 800px" />
 ```
 
@@ -317,7 +320,7 @@ attribute on the rendered `<img>` tag by default. This is supported by
 
 ### Batch loading local images
 
-Use Vite's `import.meta.glob` [feature](https://vitejs.dev/guide/features.html#glob-import).
+Use `Vite`'s `import.meta.glob` [feature](https://vitejs.dev/guide/features.html#glob-import).
 
 <!-- prettier-ignore -->
 ```html
@@ -347,18 +350,12 @@ Use the `svelte-img` component on its own by passing a `src` object, like so:
 import Img from '@zerodevx/svelte-img'
 
 const src = {
-  img: { src: 'path/to/img', w: 1920, h: 1080 },
   sources: {
     // Order is important; last format is fallback img
-    webp: [
-      { src: 'path/to/img', w: 1920 },
-      { src: 'path/to/img', w: 1024 }
-    ],
-    jpeg: [
-      { src: 'path/to/img', w: 1920 },
-      { src: 'path/to/img', w: 1024 }
-    ]
-  }
+    webp: 'path/to/480.webp 480w, ...', //srcset
+    jpeg: '...'
+  },
+  img: { src: 'path/to/img', w: 1920, h: 1080 },
 }
 </script>
 
