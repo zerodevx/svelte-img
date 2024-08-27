@@ -1,5 +1,8 @@
 import { addIconSelectors } from '@iconify/tailwind'
+import typography from '@tailwindcss/typography'
+import daisyui from 'daisyui'
 import dt from 'tailwindcss/defaultTheme'
+import themes from 'daisyui/src/theming/themes'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,22 +14,11 @@ export default {
       }
     }
   },
-  plugins: [addIconSelectors(['mdi']), require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [addIconSelectors(['mdi']), typography, daisyui],
   daisyui: {
     themes: [
-      {
-        light: {
-          ...require('daisyui/src/theming/themes')['light'],
-          primary: '#1C75BC',
-          'primary-content': 'white'
-        }
-      },
-      {
-        dark: {
-          ...require('daisyui/src/theming/themes')['dark'],
-          primary: '#1C75BC'
-        }
-      }
+      { light: { ...themes['light'], primary: '#1C75BC', 'primary-content': 'white' } },
+      { dark: { ...themes['dark'], primary: '#1C75BC' } }
     ]
   }
 }
