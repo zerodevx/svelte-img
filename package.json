@@ -1,6 +1,6 @@
 {
   "name": "@zerodevx/svelte-img",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "High-performance responsive/progressive images for SvelteKit",
   "author": "Jason Lee <jason@zerodevx.com>",
   "scripts": {
@@ -16,6 +16,7 @@
     "deploy": "npx gh-pages -d build -t -f"
   },
   "dependencies": {
+    "@zerodevx/svelte-img": "file:",
     "vite-imagetools": "^6.2.9"
   },
   "peerDependencies": {

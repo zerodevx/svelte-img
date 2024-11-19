@@ -46,7 +46,7 @@ onMount(() => {
     on:enter={() => (inview = true)}
   >
     <Img {...$$restProps} bind:ref on:load on:load={() => (loaded = true)} on:click src={meta} />
-    <div class="lqip" style:background />
+    <div class="lqip" style:background></div>
   </div>
 {/if}
 

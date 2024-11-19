@@ -1,4 +1,5 @@
 <script>
+import { onMount } from 'svelte'
 import Picture from './Picture.svelte'
 import { len, lqipToBackground } from './utils.js'
 
@@ -54,6 +55,20 @@ $: if (len(img)) {
   const { lqip } = img
   background = lqip ? lqipToBackground(lqip) : undefined
 }
+onMount(() => {
+  if (!ref) return
+
+  const restProps = $$restProps
+  Object.entries(restProps).forEach(([key, value]) => {
+    if (key.startsWith('on:')) {
+      // Handle event listeners dynamically (on:click, on:load, etc.)
+      ref.addEventListener(key.slice(3), value)
+    } else {
+      // Apply other attributes such as style, class, etc.
+      ref.setAttribute(key, value)
+    }
+  })
+})
 </script>
 
 <!-- @component
@@ -68,11 +83,15 @@ High-performance responsive/progressive images for SvelteKit.
 <Img {src} alt="cute cat" />
 -->
 
+{#if false}
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <img {...$$restProps} />
+{/if}
+
 {#if len(img)}
   <Picture {sources} {sizes}>
-    <!-- svelte-ignore a11y-missing-attribute a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute a11y-no-noninteractive-element-interactions a11y-click-events-have-key-events -->
     <img
-      {...$$restProps}
       {loading}
       {decoding}
       width={width || img.w || undefined}
